@@ -81,18 +81,18 @@ const services = [
     ],
   },
   {
-    icon: '🔒',
-    name: 'Cybersecurity',
-    tagline: 'Protect What You\'ve Built',
-    desc: "In a world where breaches make headlines daily, proactive security is table stakes. We audit vulnerabilities, harden your architecture, and implement the controls your clients, investors, and compliance auditors demand.",
+    icon: '🎨',
+    name: 'UI/UX & Prototyping',
+    tagline: 'Design That Converts & Delights',
+    desc: "Great software starts with great design. We craft intuitive, visually stunning interfaces backed by user research and rapid prototyping — so you validate ideas fast and ship products people actually love using.",
     subs: [
-      'Penetration Testing & Red Team Exercises',
-      'Web Application & API Security Auditing',
-      'SOC 2, HIPAA & ISO 27001 Readiness',
-      'DevSecOps Pipeline Integration',
-      'Cloud Security Posture Management (CSPM)',
-      'Incident Response Planning & Playbooks',
-      'Security Awareness Training Programs',
+      'User Research & Journey Mapping',
+      'Wireframing & Low-Fidelity Prototyping',
+      'High-Fidelity UI Design (Figma)',
+      'Interactive Prototype Development',
+      'Design System & Component Library',
+      'Usability Testing & Iteration',
+      'Handoff-Ready Design Specs for Developers',
     ],
   },
   {
@@ -291,7 +291,7 @@ export default function Home() {
             </div>
 
             <div className="flex flex-wrap gap-2">
-              {['Software Dev', 'Cloud & DevOps', 'AI & ML', 'IoT & Hardware', 'Cybersecurity', 'Blockchain'].map((b) => (
+              {['Software Dev', 'Cloud & DevOps', 'AI & ML', 'IoT & Hardware', 'UI/UX & Prototyping', 'Blockchain'].map((b) => (
                 <span key={b} className="text-xs text-slate-400 border border-navy-700 bg-navy-850/60 px-3 py-1.5 rounded-full">
                   {b}
                 </span>
@@ -848,15 +848,13 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12 border-b border-navy-700/60">
             {/* Brand */}
             <div className="col-span-2 md:col-span-1">
-              <div className="bg-white/95 rounded-lg px-3 py-1.5 inline-flex items-center mb-4">
-                <Image
-                  src="/devskamp-logo.png"
-                  alt="Devskamp LLC"
-                  width={140}
-                  height={36}
-                  className="h-7 w-auto"
-                />
-              </div>
+              <Image
+                src="/devskamp-logo.png"
+                alt="Devskamp LLC"
+                width={160}
+                height={40}
+                className="h-9 w-auto brightness-0 invert mb-4"
+              />
               <p className="text-slate-500 text-sm leading-relaxed max-w-[220px]">
                 Agile offshore software development. Utah, USA &amp; Dhaka, Bangladesh.
               </p>
@@ -865,7 +863,7 @@ export default function Home() {
             {[
               {
                 title: 'Services',
-                links: ['Software Development', 'Cloud Services', 'AI & Machine Learning', 'IoT & Embedded', 'Digital Marketing', 'Cybersecurity', 'Data Engineering', 'Blockchain & Web3', 'Staff Augmentation'],
+                links: ['Software Development', 'Cloud Services', 'AI & Machine Learning', 'IoT & Embedded', 'Digital Marketing', 'UI/UX & Prototyping', 'Data Engineering', 'Blockchain & Web3', 'Staff Augmentation'],
               },
               {
                 title: 'Company',
