@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Devskamp LLC — Agile Offshore Software Development | Utah & Dhaka</title>
+  <meta name="description" content="Devskamp LLC delivers agile offshore software development, cloud services, AI solutions, IoT development, and digital marketing for enterprises, startups, and digital agencies. Offices in Utah, USA and Dhaka, Bangladesh." />
+  <meta name="keywords" content="offshore software development, agile development, cloud services AWS GCP, AI development, IoT development, digital marketing, software consulting, Utah, Dhaka, Bangladesh" />
+  <meta property="og:title" content="Devskamp LLC — Agile Offshore Software Development" />
+  <meta property="og:description" content="Smart enterprise solutions for businesses across the sea. Software, Cloud, AI, IoT & Digital Marketing." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #080809;
+      --surface:  #0f0f12;
+      --card:     #141418;
+      --border:   #1e1e26;
+      --lime:     #c8ff00;
+      --lime-dim: #96c200;
+      --coral:    #ff5c38;
+      --text:     #f0eff5;
+      --muted:    #7a798a;
+      --faint:    #2a2a36;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── SCROLLBAR ── */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--lime); border-radius: 2px; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 4rem;
+      background: rgba(8,8,9,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.3s, padding 0.3s;
+    }
+    nav.scrolled { border-color: var(--border); padding: 0.9rem 4rem; }
+
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.6rem;
+      text-decoration: none;
+    }
+    .nav-logo-mark {
+      width: 36px; height: 36px;
+      background: var(--lime);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .nav-logo-mark span {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800; font-size: 0.75rem;
+      color: var(--bg); letter-spacing: -0.05em;
+    }
+    .nav-logo-text {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 1.15rem;
+      color: var(--text); letter-spacing: -0.02em;
+    }
+    .nav-logo-text em { color: var(--lime); font-style: normal; }
+
+    .nav-links {
+      display: flex; align-items: center; gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted); text-decoration: none;
+      font-size: 0.875rem; font-weight: 500;
+      transition: color 0.2s; letter-spacing: 0.01em;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--lime); color: var(--bg) !important;
+      padding: 0.55rem 1.4rem; border-radius: 4px;
+      font-weight: 700 !important; font-size: 0.875rem !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; color: var(--bg) !important; }
+
+    .nav-toggle { display: none; }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 4rem 5rem;
+      position: relative; overflow: hidden;
+    }
+
+    .hero-grid-bg {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(200,255,0,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(200,255,0,0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
+    }
+
+    .hero-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(200,255,0,0.07) 0%, transparent 65%);
+      top: -200px; right: -200px; pointer-events: none;
+    }
+    .hero-glow-2 {
+      position: absolute;
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(255,92,56,0.06) 0%, transparent 65%);
+      bottom: 0; left: 10%; pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-size: 0.75rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--lime);
+      margin-bottom: 2rem;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 28px; height: 1px; background: var(--lime);
+    }
+
+    .hero-headline {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3.2rem, 7vw, 7rem);
+      font-weight: 800; line-height: 0.95;
+      letter-spacing: -0.04em;
+      max-width: 900px;
+    }
+    .hero-headline .line { display: block; overflow: hidden; }
+    .hero-headline .word { display: inline-block; transform: translateY(110%); animation: slideUp 0.8s cubic-bezier(0.22,1,0.36,1) forwards; }
+    .hero-headline .word:nth-child(1) { animation-delay: 0.1s; }
+    .hero-headline .word:nth-child(2) { animation-delay: 0.2s; }
+    .hero-headline .accent { color: var(--lime); }
+
+    .hero-sub {
+      margin-top: 2.5rem;
+      font-size: 1.15rem; color: var(--muted);
+      max-width: 560px; line-height: 1.7;
+      opacity: 0; animation: fadeUp 0.8s 0.6s forwards;
+    }
+
+    .hero-actions {
+      display: flex; align-items: center; gap: 1.25rem;
+      margin-top: 3rem;
+      opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+    }
+
+    .btn-primary {
+      background: var(--lime); color: var(--bg);
+      padding: 0.875rem 2.2rem; border-radius: 4px;
+      font-weight: 700; font-size: 0.9rem;
+      text-decoration: none; letter-spacing: 0.01em;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-block;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(200,255,0,0.25);
+    }
+
+    .btn-ghost {
+      color: var(--text); text-decoration: none;
+      padding: 0.875rem 1.5rem; border-radius: 4px;
+      border: 1px solid var(--border);
+      font-size: 0.9rem; font-weight: 500;
+      transition: border-color 0.2s, color 0.2s;
+      display: inline-block;
+    }
+    .btn-ghost:hover { border-color: var(--muted); color: var(--lime); }
+
+    .hero-badges {
+      display: flex; flex-wrap: wrap; gap: 1rem;
+      margin-top: 5rem;
+      opacity: 0; animation: fadeUp 0.8s 1s forwards;
+    }
+    .badge {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.5rem 1rem; border: 1px solid var(--border);
+      border-radius: 100px; font-size: 0.8rem; color: var(--muted);
+    }
+    .badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); flex-shrink: 0; }
+
+    /* ── STATS ── */
+    #stats {
+      padding: 5rem 4rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 2px; background: var(--border);
+    }
+    .stat-item {
+      background: var(--bg);
+      padding: 3rem 2.5rem;
+    }
+    .stat-number {
+      font-family: 'Syne', sans-serif;
+      font-size: 3.5rem; font-weight: 800;
+      letter-spacing: -0.04em; color: var(--text);
+      line-height: 1;
+    }
+    .stat-number span { color: var(--lime); }
+    .stat-label {
+      margin-top: 0.75rem;
+      font-size: 0.875rem; color: var(--muted);
+      font-weight: 400;
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 7rem 4rem; }
+    .section-eyebrow {
+      font-size: 0.72rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--lime); margin-bottom: 1.25rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .section-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--lime); }
+    .section-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.05;
+    }
+    .section-desc {
+      margin-top: 1.25rem;
+      color: var(--muted); font-size: 1.05rem;
+      max-width: 560px; line-height: 1.7;
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem; align-items: center;
+    }
+    .about-visual {
+      position: relative;
+    }
+    .about-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 2.5rem;
+      position: relative; overflow: hidden;
+    }
+    .about-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: var(--lime);
+    }
+    .about-mission {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.4rem; font-weight: 700;
+      line-height: 1.4; letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .about-mission em { color: var(--lime); font-style: normal; }
+    .about-card p { color: var(--muted); line-height: 1.8; font-size: 0.95rem; }
+
+    .about-offices {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1rem; margin-top: 1.5rem;
+    }
+    .office-tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+    }
+    .office-tag-city {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      color: var(--text);
+    }
+    .office-tag-country {
+      font-size: 0.8rem; color: var(--muted);
+      margin-top: 0.15rem;
+    }
+    .office-tag-flag { font-size: 1.2rem; margin-bottom: 0.35rem; }
+
+    .about-content .values-list {
+      list-style: none; margin-top: 2rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .about-content .values-list li {
+      display: flex; align-items: flex-start; gap: 0.75rem;
+      font-size: 0.95rem; color: var(--muted); line-height: 1.6;
+    }
+    .values-list .check {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(200,255,0,0.1);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 0.1rem;
+    }
+    .values-list .check svg { width: 10px; fill: var(--lime); }
+
+    /* ── SERVICES ── */
+    #services { background: var(--surface); }
+    .services-header {
+      display: flex; justify-content: space-between; align-items: flex-end;
+      margin-bottom: 4rem;
+      flex-wrap: wrap; gap: 2rem;
+    }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.5px; background: var(--border);
+    }
+    .service-card {
+      background: var(--card);
+      padding: 2.75rem;
+      cursor: pointer;
+      position: relative; overflow: hidden;
+      transition: background 0.3s;
+    }
+    .service-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 0; background: var(--lime);
+      transition: height 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .service-card:hover { background: #18181e; }
+    .service-card:hover::after { height: 2px; }
+
+    .service-icon {
+      width: 52px; height: 52px;
+      background: rgba(200,255,0,0.08);
+      border: 1px solid rgba(200,255,0,0.15);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.75rem;
+      font-size: 1.4rem;
+    }
+    .service-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.25rem; font-weight: 700;
+      letter-spacing: -0.02em; margin-bottom: 0.75rem;
+    }
+    .service-desc {
+      font-size: 0.9rem; color: var(--muted);
+      line-height: 1.7; margin-bottom: 1.75rem;
+    }
+    .service-subs {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .service-subs li {
+      font-size: 0.82rem; color: var(--muted);
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.4rem 0;
+      border-bottom: 1px solid var(--faint);
+      transition: color 0.2s;
+    }
+    .service-card:hover .service-subs li { color: #a0a0b0; }
+    .service-subs li::before {
+      content: '';
+      width: 4px; height: 4px; border-radius: 50%;
+      background: var(--lime); flex-shrink: 0;
+    }
+    .service-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      color: var(--lime); font-size: 0.82rem; font-weight: 600;
+      text-decoration: none; margin-top: 1.75rem;
+      letter-spacing: 0.05em; text-transform: uppercase;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .service-card:hover .service-link { opacity: 1; }
+    .service-link svg { width: 14px; transition: transform 0.2s; }
+    .service-link:hover svg { transform: translateX(3px); }
+
+    /* ── WHY US ── */
+    #why {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7rem; align-items: start;
+    }
+    .why-features {
+      display: flex; flex-direction: column; gap: 0;
+      margin-top: 3rem;
+    }
+    .why-item {
+      display: flex; gap: 1.5rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .why-item:first-child { border-top: 1px solid var(--border); }
+    .why-num {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--lime); min-width: 28px;
+      margin-top: 0.2rem; letter-spacing: 0.1em;
+    }
+    .why-item-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.05rem; font-weight: 700;
+      margin-bottom: 0.4rem; letter-spacing: -0.01em;
+    }
+    .why-item-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+
+    .why-visual {
+      position: sticky; top: 6rem;
+    }
+    .why-big-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 8px; padding: 3rem;
+      position: relative; overflow: hidden;
+    }
+    .why-big-card::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 200px; height: 200px;
+      background: radial-gradient(circle, rgba(200,255,0,0.08), transparent 70%);
+    }
+    .engagement-models {
+      margin-top: 2rem;
+      display: flex; flex-direction: column; gap: 0.75rem;
+    }
+    .model-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1rem 1.25rem;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .model-name { font-weight: 600; font-size: 0.9rem; }
+    .model-tag {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--lime);
+      background: rgba(200,255,0,0.08);
+      border: 1px solid rgba(200,255,0,0.15);
+      padding: 0.25rem 0.7rem; border-radius: 100px;
+    }
+
+    /* ── TECH STACK ── */
+    #stack {
+      background: var(--surface);
+      text-align: center;
+    }
+    .stack-header { max-width: 600px; margin: 0 auto 4rem; }
+    .tech-categories {
+      display: grid; grid-template-columns: repeat(5, 1fr);
+      gap: 1.5px; background: var(--border);
+      margin-top: 3rem;
+    }
+    .tech-cat {
+      background: var(--card);
+      padding: 2rem 1.5rem;
+      text-align: left;
+    }
+    .tech-cat-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--lime);
+      margin-bottom: 1rem;
+    }
+    .tech-pills {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+    }
+    .tech-pill {
+      font-size: 0.78rem; padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border); border-radius: 4px;
+      color: var(--muted);
+    }
+
+    /* ── PROCESS ── */
+    #process { }
+    .process-steps {
+      display: grid; grid-template-columns: repeat(6, 1fr);
+      gap: 0; margin-top: 4rem;
+      position: relative;
+    }
+    .process-steps::before {
+      content: '';
+      position: absolute; top: 1.5rem; left: 0; right: 0;
+      height: 1px; background: var(--border);
+      z-index: 0;
+    }
+    .process-step { padding: 0 1rem; }
+    .step-num {
+      width: 3rem; height: 3rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-size: 0.85rem; font-weight: 700; color: var(--lime);
+      position: relative; z-index: 1;
+      margin-bottom: 1.5rem;
+    }
+    .step-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.95rem;
+      margin-bottom: 0.5rem; letter-spacing: -0.01em;
+    }
+    .step-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── GLOBAL PRESENCE ── */
+    #presence { background: var(--surface); }
+    .presence-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1.5px; background: var(--border);
+      margin-top: 4rem;
+    }
+    .presence-card {
+      background: var(--card);
+      padding: 3.5rem;
+      position: relative; overflow: hidden;
+    }
+    .presence-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; bottom: 0;
+      width: 3px; background: var(--lime);
+    }
+    .presence-flag { font-size: 2.5rem; margin-bottom: 1.25rem; }
+    .presence-country {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--lime); margin-bottom: 0.5rem;
+    }
+    .presence-city {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem; font-weight: 800;
+      letter-spacing: -0.04em; line-height: 1;
+      margin-bottom: 1.25rem;
+    }
+    .presence-desc { font-size: 0.9rem; color: var(--muted); line-height: 1.75; max-width: 380px; }
+    .presence-details {
+      margin-top: 2rem;
+      display: flex; flex-direction: column; gap: 0.5rem;
+    }
+    .presence-detail {
+      font-size: 0.85rem; color: var(--muted);
+      display: flex; gap: 0.6rem; align-items: center;
+    }
+    .presence-detail strong { color: var(--text); }
+
+    /* ── INDUSTRIES ── */
+    #industries { }
+    .industries-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px; background: var(--border);
+      margin-top: 4rem;
+    }
+    .industry-item {
+      background: var(--bg);
+      padding: 2rem 1.75rem;
+      transition: background 0.2s;
+    }
+    .industry-item:hover { background: var(--card); }
+    .industry-icon { font-size: 1.75rem; margin-bottom: 1rem; }
+    .industry-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 1rem;
+      letter-spacing: -0.01em; margin-bottom: 0.4rem;
+    }
+    .industry-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── CTA ── */
+    #cta {
+      background: var(--surface);
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    #cta::before {
+      content: '';
+      position: absolute; top: -200px; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 700px;
+      background: radial-gradient(circle, rgba(200,255,0,0.06), transparent 60%);
+      pointer-events: none;
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-inner .section-title {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      max-width: 700px; margin: 0 auto;
+    }
+    .cta-inner .section-title .highlight { color: var(--lime); }
+    .cta-inner p {
+      color: var(--muted); margin: 1.5rem auto 2.5rem;
+      max-width: 480px; font-size: 1.05rem; line-height: 1.7;
+    }
+    .cta-actions {
+      display: flex; justify-content: center; align-items: center;
+      gap: 1.25rem; flex-wrap: wrap;
+    }
+
+    /* ── CONTACT STRIP ── */
+    #contact-strip {
+      padding: 4rem;
+      border-top: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 2px; background: var(--border);
+    }
+    .contact-item {
+      background: var(--bg);
+      padding: 2.5rem;
+    }
+    .contact-label {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 0.75rem;
+    }
+    .contact-value {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.1rem; font-weight: 700;
+      color: var(--text); text-decoration: none;
+      transition: color 0.2s;
+    }
+    a.contact-value:hover { color: var(--lime); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 4rem 4rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-top {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 4rem; padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .footer-brand p {
+      font-size: 0.9rem; color: var(--muted);
+      line-height: 1.7; margin-top: 1.25rem;
+      max-width: 280px;
+    }
+    .footer-col-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700; font-size: 0.875rem;
+      letter-spacing: 0.02em; margin-bottom: 1.25rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a {
+      font-size: 0.875rem; color: var(--muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--lime); }
+
+    .footer-bottom {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 2rem; flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-size: 0.82rem; color: var(--muted); }
+    .footer-copy a { color: var(--lime); text-decoration: none; }
+    .footer-legal { display: flex; gap: 1.5rem; }
+    .footer-legal a { font-size: 0.82rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .footer-legal a:hover { color: var(--text); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes slideUp {
+      from { transform: translateY(110%); }
+      to   { transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1100px) {
+      nav { padding: 1.25rem 2rem; }
+      nav.scrolled { padding: 0.9rem 2rem; }
+      #hero { padding: 8rem 2rem 5rem; }
+      section { padding: 5rem 2rem; }
+      #stats { padding: 4rem 2rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); }
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .tech-categories { grid-template-columns: repeat(3, 1fr); }
+      .process-steps { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+      .process-steps::before { display: none; }
+      .industries-grid { grid-template-columns: repeat(2, 1fr); }
+      footer { padding: 4rem 2rem 2rem; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      #contact-strip { padding: 2rem; grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle {
+        display: flex; align-items: center; justify-content: center;
+        width: 40px; height: 40px;
+        background: var(--faint); border: none; border-radius: 6px;
+        cursor: pointer; color: var(--text); font-size: 1.2rem;
+      }
+      #hero { padding: 7rem 1.5rem 4rem; }
+      section { padding: 4rem 1.5rem; }
+      .services-grid,
+      .tech-categories,
+      .presence-grid,
+      .industries-grid { grid-template-columns: 1fr; }
+      #about, #why { grid-template-columns: 1fr; gap: 3rem; }
+      .why-visual { position: static; }
+      .process-steps { grid-template-columns: repeat(2, 1fr); }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .footer-top { grid-template-columns: 1fr; gap: 2rem; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+      nav { padding: 1rem 1.5rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark"><span>DS</span></div>
+    <span class="nav-logo-text">Dev<em>skamp</em></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#presence">Offices</a></li>
+    <li><a href="#cta" class="nav-cta">Get a Quote</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle">&#9776;</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow-2"></div>
+
+  <div class="hero-eyebrow">Agile Offshore Development &mdash; Utah · Dhaka</div>
+
+  <h1 class="hero-headline">
+    <span class="line"><span class="word">We Build</span></span>
+    <span class="line"><span class="word">Software That</span></span>
+    <span class="line"><span class="word accent">Transforms</span></span>
+    <span class="line"><span class="word">Businesses.</span></span>
+  </h1>
+
+  <p class="hero-sub">
+    Devskamp LLC delivers enterprise-grade software, cloud infrastructure, AI solutions,
+    and IoT systems to companies across the globe — with the speed of an agile team
+    and the depth of seasoned engineers.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#cta" class="btn-primary">Start a Project</a>
+    <a href="#services" class="btn-ghost">Explore Services &darr;</a>
+  </div>
+
+  <div class="hero-badges">
+    <div class="badge"><span class="badge-dot"></span> Software Development</div>
+    <div class="badge"><span class="badge-dot"></span> Cloud &amp; DevOps</div>
+    <div class="badge"><span class="badge-dot"></span> AI &amp; Machine Learning</div>
+    <div class="badge"><span class="badge-dot"></span> IoT &amp; Hardware</div>
+    <div class="badge"><span class="badge-dot"></span> Digital Marketing</div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div id="stats">
+  <div class="stats-grid">
+    <div class="stat-item reveal">
+      <div class="stat-number"><span class="counter" data-target="150">0</span><span>+</span></div>
+      <div class="stat-label">Projects Delivered Globally</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-1">
+      <div class="stat-number"><span class="counter" data-target="8">0</span><span>+</span></div>
+      <div class="stat-label">Years of Engineering Excellence</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-2">
+      <div class="stat-number"><span class="counter" data-target="40">0</span><span>+</span></div>
+      <div class="stat-label">Skilled Engineers &amp; Specialists</div>
+    </div>
+    <div class="stat-item reveal reveal-delay-3">
+      <div class="stat-number"><span class="counter" data-target="95">0</span><span>%</span></div>
+      <div class="stat-label">Client Retention Rate</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-card">
+      <p class="about-mission">
+        Transforming the way people do business through <em>smart enterprise solutions</em> built with purpose.
+      </p>
+      <p>
+        We are a young, enthusiastic technology company that believes great software is the most powerful lever for business growth.
+        Our distributed team bridges the innovation ecosystems of the United States and South Asia — combining Western business
+        strategy with world-class engineering talent.
+      </p>
+      <div class="about-offices">
+        <div class="office-tag">
+          <div class="office-tag-flag">🇺🇸</div>
+          <div class="office-tag-city">Utah</div>
+          <div class="office-tag-country">United States</div>
+        </div>
+        <div class="office-tag">
+          <div class="office-tag-flag">🇧🇩</div>
+          <div class="office-tag-city">Dhaka</div>
+          <div class="office-tag-country">Bangladesh</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-content reveal reveal-delay-1">
+    <div class="section-eyebrow">About Devskamp</div>
+    <h2 class="section-title">Built for Enterprises.<br>Priced for Startups.</h2>
+    <p class="section-desc">
+      Devskamp was founded with a singular mission — to eliminate the gap between
+      what businesses need and what their technology can deliver. We serve enterprises, startups,
+      IT consulting vendors, and digital agencies with agile, offshore development that never compromises on quality.
+    </p>
+    <ul class="values-list">
+      <li>
+        <span class="check"><svg viewBox="0 0 10 8"><polyline points="1,4 3.5,6.5 9,1" stroke="#c8ff00" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Agile-first methodology with transparent sprint delivery and weekly reporting
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 10 8"><polyline points="1,4 3.5,6.5 9,1" stroke="#c8ff00" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Dedicated development teams that integrate seamlessly into your workflow
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 10 8"><polyline points="1,4 3.5,6.5 9,1" stroke="#c8ff00" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Cost-effective offshore rates without sacrificing engineering standards
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 10 8"><polyline points="1,4 3.5,6.5 9,1" stroke="#c8ff00" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Full-cycle delivery from architecture and design to deployment and support
+      </li>
+      <li>
+        <span class="check"><svg viewBox="0 0 10 8"><polyline points="1,4 3.5,6.5 9,1" stroke="#c8ff00" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        Time-zone friendly communication across US, EU, and Asia-Pacific clients
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="services-header">
+    <div class="reveal">
+      <div class="section-eyebrow">What We Do</div>
+      <h2 class="section-title">End-to-End Technology<br>Services</h2>
+    </div>
+    <p class="section-desc reveal reveal-delay-1" style="margin-top:0">
+      From idea to production, we cover the entire technology stack your business needs to compete and win in a digital-first world.
+    </p>
+  </div>
+
+  <div class="services-grid">
+
+    <!-- Software Development -->
+    <div class="service-card reveal">
+      <div class="service-icon">🖥️</div>
+      <div class="service-name">Software Development</div>
+      <p class="service-desc">
+        We craft scalable, resilient software solutions tailored to your business objectives.
+        From complex enterprise platforms to sleek consumer-facing products, our engineers
+        build software that performs under pressure and grows with your ambitions.
+      </p>
+      <ul class="service-subs">
+        <li>Custom Web Application Development</li>
+        <li>Mobile App Development (iOS &amp; Android)</li>
+        <li>Enterprise Software &amp; ERP Solutions</li>
+        <li>API Design, Development &amp; Integration</li>
+        <li>Legacy System Modernization &amp; Migration</li>
+        <li>SaaS Product Engineering</li>
+        <li>UI/UX Design &amp; Prototyping</li>
+        <li>QA, Testing &amp; Performance Optimization</li>
+      </ul>
+      <a href="#cta" class="service-link">Explore <svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 7h12M8 3l5 4-5 4"/></svg></a>
+    </div>
+
+    <!-- Cloud Services -->
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">☁️</div>
+      <div class="service-name">Cloud Services</div>
+      <p class="service-desc">
+        Whether you're migrating legacy infrastructure or architecting cloud-native systems from scratch,
+        Devskamp's certified cloud engineers deliver secure, high-availability environments on AWS,
+        Google Cloud, or fully custom cloud stacks built for your specific workloads.
+      </p>
+      <ul class="service-subs">
+        <li>AWS Architecture, Migration &amp; Optimization</li>
+        <li>Google Cloud Platform (GCP) Solutions</li>
+        <li>Custom Private &amp; Hybrid Cloud Infrastructure</li>
+        <li>DevOps Engineering &amp; CI/CD Pipeline Automation</li>
+        <li>Containerization with Docker &amp; Kubernetes</li>
+        <li>Cloud Security, Compliance &amp; Governance</li>
+        <li>Managed Cloud Services &amp; 24/7 Monitoring</li>
+        <li>Serverless Architecture &amp; Microservices</li>
+      </ul>
+      <a href="#cta" class="service-link">Explore <svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 7h12M8 3l5 4-5 4"/></svg></a>
+    </div>
+
+    <!-- AI Development -->
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🤖</div>
+      <div class="service-name">AI Development</div>
+      <p class="service-desc">
+        Harness the transformative power of artificial intelligence with solutions built
+        specifically for your industry and data. We develop production-ready AI systems
+        that automate operations, surface insights, and create genuinely intelligent user experiences.
+      </p>
+      <ul class="service-subs">
+        <li>Custom Machine Learning Model Development</li>
+        <li>LLM Integration &amp; Fine-Tuning (GPT, Claude, LLaMA)</li>
+        <li>Natural Language Processing &amp; Chatbots</li>
+        <li>Computer Vision &amp; Image Recognition</li>
+        <li>Predictive Analytics &amp; Forecasting Engines</li>
+        <li>AI-Powered Process Automation (RPA + AI)</li>
+        <li>Recommendation Systems</li>
+        <li>AI Strategy &amp; Feasibility Consulting</li>
+      </ul>
+      <a href="#cta" class="service-link">Explore <svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 7h12M8 3l5 4-5 4"/></svg></a>
+    </div>
+
+    <!-- IoT Development -->
+    <div class="service-card reveal">
+      <div class="service-icon">📡</div>
+      <div class="service-name">IoT Development</div>
+      <p class="service-desc">
+        From sensor hardware to cloud dashboards, we engineer complete IoT ecosystems
+        that connect the physical and digital worlds. Our team handles everything —
+        custom PCB design, firmware, communication protocols, and real-time data platforms.
+      </p>
+      <ul class="service-subs">
+        <li>IoT Hardware Design &amp; PCB Prototyping</li>
+        <li>Embedded Systems &amp; Firmware Development</li>
+        <li>IoT Platform, Dashboard &amp; Analytics</li>
+        <li>Industrial IoT (IIoT) &amp; SCADA Systems</li>
+        <li>Smart Device Connectivity (MQTT, CoAP, BLE, Zigbee)</li>
+        <li>Wearable &amp; Consumer IoT Products</li>
+        <li>IoT Security, OTA Updates &amp; Device Management</li>
+        <li>Edge Computing &amp; AI at the Edge</li>
+      </ul>
+      <a href="#cta" class="service-link">Explore <svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 7h12M8 3l5 4-5 4"/></svg></a>
+    </div>
+
+    <!-- Digital Marketing -->
+    <div class="service-card reveal reveal-delay-1">
+      <div class="service-icon">📈</div>
+      <div class="service-name">Digital Marketing</div>
+      <p class="service-desc">
+        Great software deserves to be found. Our growth-focused digital marketing team
+        combines data-driven strategy with compelling creative to help your business
+        attract, convert, and retain customers across every digital channel.
+      </p>
+      <ul class="service-subs">
+        <li>Search Engine Optimization (SEO &amp; Technical SEO)</li>
+        <li>Performance Marketing — Google Ads, Meta, LinkedIn</li>
+        <li>Social Media Strategy &amp; Content Management</li>
+        <li>Email Marketing Automation &amp; Nurture Sequences</li>
+        <li>Conversion Rate Optimization (CRO)</li>
+        <li>Brand Identity &amp; Positioning Strategy</li>
+        <li>Content Marketing &amp; Thought Leadership</li>
+        <li>Analytics, Reporting &amp; Attribution Modeling</li>
+      </ul>
+      <a href="#cta" class="service-link">Explore <svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 7h12M8 3l5 4-5 4"/></svg></a>
+    </div>
+
+    <!-- IT Consulting -->
+    <div class="service-card reveal reveal-delay-2">
+      <div class="service-icon">🧩</div>
+      <div class="service-name">IT Consulting &amp; Strategy</div>
+      <p class="service-desc">
+        Navigate complex technology decisions with confidence. Our senior architects and
+        consultants work alongside your leadership team to assess your current tech landscape,
+        define a roadmap, and align technology investments with business outcomes.
+      </p>
+      <ul class="service-subs">
+        <li>Technology Roadmap &amp; Architecture Planning</li>
+        <li>Digital Transformation Strategy</li>
+        <li>Technology Stack Evaluation &amp; Vendor Selection</li>
+        <li>CTO-as-a-Service (Fractional CTO)</li>
+        <li>IT Audit &amp; Security Assessment</li>
+        <li>Agile Coaching &amp; Process Improvement</li>
+        <li>Team Augmentation &amp; Staffing</li>
+        <li>Post-Merger Technology Integration</li>
+      </ul>
+      <a href="#cta" class="service-link">Explore <svg viewBox="0 0 14 14" fill="currentColor"><path d="M1 7h12M8 3l5 4-5 4"/></svg></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section id="why">
+  <div class="why-visual reveal">
+    <div class="section-eyebrow">Why Devskamp</div>
+    <h2 class="section-title">The Offshore Partner<br>That Works Like<br>an In-House Team</h2>
+    <p class="section-desc">
+      Offshore development only works when trust, communication, and quality are non-negotiable.
+      We've built our entire operation around eliminating the friction that makes most offshore engagements fail.
+    </p>
+
+    <div class="why-big-card" style="margin-top:3rem">
+      <div class="section-eyebrow" style="margin-bottom:1.25rem">Engagement Models</div>
+      <p style="font-size:0.9rem;color:var(--muted);margin-bottom:0">Choose the model that fits your project stage and risk tolerance.</p>
+      <div class="engagement-models">
+        <div class="model-pill">
+          <span class="model-name">Dedicated Team</span>
+          <span class="model-tag">Most Popular</span>
+        </div>
+        <div class="model-pill">
+          <span class="model-name">Fixed-Price Project</span>
+          <span class="model-tag">Defined Scope</span>
+        </div>
+        <div class="model-pill">
+          <span class="model-name">Time &amp; Materials</span>
+          <span class="model-tag">Maximum Flexibility</span>
+        </div>
+        <div class="model-pill">
+          <span class="model-name">Staff Augmentation</span>
+          <span class="model-tag">Scale Your Team</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="why-features">
+      <div class="why-item reveal">
+        <span class="why-num">01</span>
+        <div>
+          <div class="why-item-title">Transparent Agile Delivery</div>
+          <p class="why-item-desc">Two-week sprints with documented velocity, demo calls, and Jira/Linear access — you see exactly where every hour goes. No black boxes, no surprise delays.</p>
+        </div>
+      </div>
+      <div class="why-item reveal reveal-delay-1">
+        <span class="why-num">02</span>
+        <div>
+          <div class="why-item-title">Senior-Led Engineering</div>
+          <p class="why-item-desc">Every project is led by engineers with 5+ years of production experience. Junior developers are mentored and code-reviewed before anything reaches your codebase.</p>
+        </div>
+      </div>
+      <div class="why-item reveal reveal-delay-2">
+        <span class="why-num">03</span>
+        <div>
+          <div class="why-item-title">Dual-Timezone Coverage</div>
+          <p class="why-item-desc">Our Utah and Dhaka offices give you near-24-hour development coverage. Critical issues get resolved while your team sleeps — no SLA compromise.</p>
+        </div>
+      </div>
+      <div class="why-item reveal reveal-delay-3">
+        <span class="why-num">04</span>
+        <div>
+          <div class="why-item-title">IP Protection &amp; NDAs</div>
+          <p class="why-item-desc">We sign comprehensive NDAs and IP assignment agreements before work begins. Your code, data, and business logic belong entirely to you — always.</p>
+        </div>
+      </div>
+      <div class="why-item reveal">
+        <span class="why-num">05</span>
+        <div>
+          <div class="why-item-title">Cost Efficiency Without Compromise</div>
+          <p class="why-item-desc">Our offshore rates are 40–60% below US market rates. Not because we cut corners, but because of our operational model — savings pass directly to you.</p>
+        </div>
+      </div>
+      <div class="why-item reveal reveal-delay-1">
+        <span class="why-num">06</span>
+        <div>
+          <div class="why-item-title">Post-Launch Partnership</div>
+          <p class="why-item-desc">Launch is not the finish line. We offer ongoing maintenance, feature development, performance monitoring, and scaling support for every product we build.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TECH STACK -->
+<section id="stack">
+  <div class="stack-header reveal">
+    <div class="section-eyebrow" style="justify-content:center">Technologies</div>
+    <h2 class="section-title">Battle-Tested Stack,<br>Modern by Default</h2>
+    <p class="section-desc" style="margin:1rem auto 0">
+      We select the right tool for every job — not the trendy one. Our stack spans frontend, backend, cloud, AI, and embedded systems.
+    </p>
+  </div>
+
+  <div class="tech-categories reveal">
+    <div class="tech-cat">
+      <div class="tech-cat-label">Frontend</div>
+      <div class="tech-pills">
+        <span class="tech-pill">React</span>
+        <span class="tech-pill">Next.js</span>
+        <span class="tech-pill">Vue.js</span>
+        <span class="tech-pill">Angular</span>
+        <span class="tech-pill">TypeScript</span>
+        <span class="tech-pill">Tailwind</span>
+      </div>
+    </div>
+    <div class="tech-cat">
+      <div class="tech-cat-label">Backend</div>
+      <div class="tech-pills">
+        <span class="tech-pill">Node.js</span>
+        <span class="tech-pill">Python</span>
+        <span class="tech-pill">Go</span>
+        <span class="tech-pill">Java</span>
+        <span class="tech-pill">.NET</span>
+        <span class="tech-pill">FastAPI</span>
+        <span class="tech-pill">GraphQL</span>
+      </div>
+    </div>
+    <div class="tech-cat">
+      <div class="tech-cat-label">Cloud &amp; DevOps</div>
+      <div class="tech-pills">
+        <span class="tech-pill">AWS</span>
+        <span class="tech-pill">GCP</span>
+        <span class="tech-pill">Terraform</span>
+        <span class="tech-pill">Docker</span>
+        <span class="tech-pill">Kubernetes</span>
+        <span class="tech-pill">GitHub Actions</span>
+      </div>
+    </div>
+    <div class="tech-cat">
+      <div class="tech-cat-label">AI &amp; Data</div>
+      <div class="tech-pills">
+        <span class="tech-pill">PyTorch</span>
+        <span class="tech-pill">TensorFlow</span>
+        <span class="tech-pill">OpenAI</span>
+        <span class="tech-pill">LangChain</span>
+        <span class="tech-pill">Hugging Face</span>
+        <span class="tech-pill">Spark</span>
+      </div>
+    </div>
+    <div class="tech-cat">
+      <div class="tech-cat-label">IoT &amp; Embedded</div>
+      <div class="tech-pills">
+        <span class="tech-pill">Arduino</span>
+        <span class="tech-pill">Raspberry Pi</span>
+        <span class="tech-pill">ESP32</span>
+        <span class="tech-pill">MQTT</span>
+        <span class="tech-pill">FreeRTOS</span>
+        <span class="tech-pill">Zephyr</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section id="process">
+  <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto 1rem">
+    <div class="section-eyebrow" style="justify-content:center">How We Work</div>
+    <h2 class="section-title">From Kickoff to<br>Production in Weeks</h2>
+  </div>
+
+  <div class="process-steps">
+    <div class="process-step reveal">
+      <div class="step-num">01</div>
+      <div class="step-title">Discovery Call</div>
+      <p class="step-desc">We map your requirements, goals, constraints, and success metrics in a structured discovery session.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-1">
+      <div class="step-num">02</div>
+      <div class="step-title">Proposal &amp; Scope</div>
+      <p class="step-desc">Detailed technical proposal with fixed timelines, resource plan, and milestone-based delivery schedule.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-2">
+      <div class="step-num">03</div>
+      <div class="step-title">Team Assembly</div>
+      <p class="step-desc">We assemble a dedicated team matched to your tech stack and assign a senior lead engineer from day one.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-3">
+      <div class="step-num">04</div>
+      <div class="step-title">Agile Sprints</div>
+      <p class="step-desc">Two-week sprints with daily standups, sprint reviews, and continuous delivery into staging environments.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-4">
+      <div class="step-num">05</div>
+      <div class="step-title">QA &amp; Launch</div>
+      <p class="step-desc">Rigorous automated and manual testing, performance audits, security scanning, and production deployment.</p>
+    </div>
+    <div class="process-step reveal reveal-delay-4">
+      <div class="step-num">06</div>
+      <div class="step-title">Support &amp; Scale</div>
+      <p class="step-desc">Post-launch SLA, monitoring, incident response, and a roadmap for continued feature development.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRESENCE -->
+<section id="presence">
+  <div class="reveal" style="text-align:center;max-width:600px;margin:0 auto">
+    <div class="section-eyebrow" style="justify-content:center">Global Offices</div>
+    <h2 class="section-title">Two Offices.<br>One Unified Team.</h2>
+    <p class="section-desc" style="margin:1rem auto 0">
+      Strategic locations in the United States and Bangladesh give us unmatched geographic reach
+      and around-the-clock development capability.
+    </p>
+  </div>
+
+  <div class="presence-grid">
+    <div class="presence-card reveal">
+      <div class="presence-flag">🇺🇸</div>
+      <div class="presence-country">North America</div>
+      <div class="presence-city">Utah, USA</div>
+      <p class="presence-desc">
+        Our US headquarters in Utah serves as the primary client-facing hub for North American
+        and European clients. The Utah office manages strategic partnerships, enterprise accounts,
+        and project leadership — ensuring seamless communication across time zones.
+      </p>
+      <div class="presence-details">
+        <div class="presence-detail"><strong>Focus:</strong> Client Relations, Strategy, Enterprise Sales</div>
+        <div class="presence-detail"><strong>Time Zone:</strong> MT (UTC-7)</div>
+        <div class="presence-detail"><strong>Markets Served:</strong> USA, Canada, Europe, Australia</div>
+      </div>
+    </div>
+    <div class="presence-card reveal reveal-delay-1">
+      <div class="presence-flag">🇧🇩</div>
+      <div class="presence-country">South Asia</div>
+      <div class="presence-city">Dhaka, BD</div>
+      <p class="presence-desc">
+        Our Dhaka engineering center houses the core of our technical talent — a growing team
+        of developers, architects, QA engineers, and designers who build world-class software
+        at exceptional value. Bangladesh's tech ecosystem is one of the fastest-growing in Asia.
+      </p>
+      <div class="presence-details">
+        <div class="presence-detail"><strong>Focus:</strong> Engineering, Design, QA, DevOps</div>
+        <div class="presence-detail"><strong>Time Zone:</strong> BST (UTC+6)</div>
+        <div class="presence-detail"><strong>Capacity:</strong> 40+ Engineers &amp; Growing</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INDUSTRIES -->
+<section id="industries">
+  <div class="reveal" style="margin-bottom:1rem">
+    <div class="section-eyebrow">Industries</div>
+    <h2 class="section-title">We Speak Your<br>Industry's Language</h2>
+  </div>
+
+  <div class="industries-grid">
+    <div class="industry-item reveal">
+      <div class="industry-icon">🏦</div>
+      <div class="industry-name">FinTech &amp; Banking</div>
+      <p class="industry-desc">Payment systems, lending platforms, compliance tooling, and core banking modernization.</p>
+    </div>
+    <div class="industry-item reveal reveal-delay-1">
+      <div class="industry-icon">🏥</div>
+      <div class="industry-name">Healthcare &amp; MedTech</div>
+      <p class="industry-desc">HIPAA-compliant EHR systems, telemedicine platforms, medical IoT, and clinical decision support.</p>
+    </div>
+    <div class="industry-item reveal reveal-delay-2">
+      <div class="industry-icon">🛒</div>
+      <div class="industry-name">eCommerce &amp; Retail</div>
+      <p class="industry-desc">High-conversion storefronts, inventory management, AI recommendation engines, and OMS.</p>
+    </div>
+    <div class="industry-item reveal reveal-delay-3">
+      <div class="industry-icon">🏭</div>
+      <div class="industry-name">Manufacturing &amp; IIoT</div>
+      <p class="industry-desc">Smart factory automation, predictive maintenance, SCADA systems, and supply chain digitization.</p>
+    </div>
+    <div class="industry-item reveal">
+      <div class="industry-icon">📚</div>
+      <div class="industry-name">EdTech &amp; E-Learning</div>
+      <p class="industry-desc">LMS platforms, adaptive learning engines, virtual classrooms, and credentialing systems.</p>
+    </div>
+    <div class="industry-item reveal reveal-delay-1">
+      <div class="industry-icon">🚚</div>
+      <div class="industry-name">Logistics &amp; Supply Chain</div>
+      <p class="industry-desc">Fleet tracking, route optimization, warehouse management, and real-time visibility platforms.</p>
+    </div>
+    <div class="industry-item reveal reveal-delay-2">
+      <div class="industry-icon">🏗️</div>
+      <div class="industry-name">PropTech &amp; Real Estate</div>
+      <p class="industry-desc">Property management software, listing platforms, virtual tours, and investment analytics.</p>
+    </div>
+    <div class="industry-item reveal reveal-delay-3">
+      <div class="industry-icon">🎯</div>
+      <div class="industry-name">SaaS &amp; Startups</div>
+      <p class="industry-desc">MVPs, product-market fit iteration, growth engineering, and scale-ready architecture from day one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner reveal">
+    <div class="section-eyebrow" style="justify-content:center">Let's Build Together</div>
+    <h2 class="section-title">
+      Ready to <span class="highlight">Transform</span><br>Your Business?
+    </h2>
+    <p>
+      Tell us about your project. We'll respond within 24 hours with a clear path forward —
+      no sales pressure, no vague timelines.
+    </p>
+    <div class="cta-actions">
+      <a href="mailto:hello@devskamp.com" class="btn-primary">Start a Project</a>
+      <a href="mailto:hello@devskamp.com" class="btn-ghost">Schedule a Free Consultation</a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT STRIP -->
+<div id="contact-strip">
+  <div class="contact-item reveal">
+    <div class="contact-label">Email Us</div>
+    <a href="mailto:hello@devskamp.com" class="contact-value">hello@devskamp.com</a>
+  </div>
+  <div class="contact-item reveal reveal-delay-1">
+    <div class="contact-label">US Office — Utah</div>
+    <span class="contact-value">Utah, United States</span>
+  </div>
+  <div class="contact-item reveal reveal-delay-2">
+    <div class="contact-label">BD Office — Dhaka</div>
+    <span class="contact-value">Dhaka, Bangladesh</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="nav-logo" style="text-decoration:none">
+        <div class="nav-logo-mark"><span>DS</span></div>
+        <span class="nav-logo-text">Dev<em>skamp</em></span>
+      </a>
+      <p>
+        Agile offshore software development for enterprises, startups, and digital agencies.
+        We build technology that transforms businesses — from Utah to Dhaka and everywhere in between.
+      </p>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Software Development</a></li>
+        <li><a href="#services">Cloud Services</a></li>
+        <li><a href="#services">AI Development</a></li>
+        <li><a href="#services">IoT Development</a></li>
+        <li><a href="#services">Digital Marketing</a></li>
+        <li><a href="#services">IT Consulting</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#about">About Devskamp</a></li>
+        <li><a href="#why">Why Us</a></li>
+        <li><a href="#process">Our Process</a></li>
+        <li><a href="#industries">Industries</a></li>
+        <li><a href="#presence">Offices</a></li>
+        <li><a href="#cta">Contact Us</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="footer-col-title">Expertise</div>
+      <ul class="footer-links">
+        <li><a href="#stack">React &amp; Next.js</a></li>
+        <li><a href="#stack">AWS &amp; GCP</a></li>
+        <li><a href="#stack">Machine Learning</a></li>
+        <li><a href="#stack">IoT &amp; Embedded</a></li>
+        <li><a href="#stack">Node.js &amp; Python</a></li>
+        <li><a href="#stack">DevOps &amp; Kubernetes</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p class="footer-copy">
+      &copy; 2024 Devskamp LLC. All rights reserved.
+      &nbsp;&mdash;&nbsp; Utah, USA &amp; Dhaka, Bangladesh
+    </p>
+    <div class="footer-legal">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Cookie Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll observer for reveal animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Nav scroll state
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Counter animation
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target);
+    const duration = 1800;
+    const start = performance.now();
+    function update(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target);
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.querySelectorAll('.counter').forEach(animateCounter);
+        counterObserver.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.stat-item').forEach(el => counterObserver.observe(el));
+
+  // Mobile nav toggle (basic)
+  document.getElementById('navToggle').addEventListener('click', () => {
+    const links = document.querySelector('.nav-links');
+    if (links.style.display === 'flex') {
+      links.style.display = '';
+    } else {
+      links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:var(--bg);padding:1.5rem 2rem;border-bottom:1px solid var(--border);gap:1rem;';
+    }
+  });
+</script>
+
+</body>
+</html>
