@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Trading Masterclass: Zero to Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
+        
+        body {
+            background-color: #FDFCF8;
+            color: #2D3748;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 45vh;
+            max-height: 450px;
+            min-height: 300px;
+        }
+
+        .chart-container-small {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 30vh;
+            max-height: 300px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        input[type="number"] {
+            appearance: textfield;
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Custom HTML/CSS Candlestick Styling (No SVG) */
+        .candle-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            position: relative;
+            width: 60px;
+        }
+        .candle-wick {
+            width: 4px;
+            height: 100%;
+            background-color: #2D3748;
+            position: absolute;
+            z-index: 1;
+        }
+        .candle-body {
+            width: 100%;
+            position: absolute;
+            z-index: 2;
+            border-radius: 2px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        .candle-bull .candle-body { background-color: #A3B18A; height: 60%; top: 20%; }
+        .candle-bear .candle-body { background-color: #E07A5F; height: 60%; top: 20%; }
+        
+        .nav-scroller {
+            scrollbar-width: none; 
+        }
+        .nav-scroller::-webkit-scrollbar {
+            display: none; 
+        }
+    </style>
+</head>
+<body class="antialiased min-h-screen flex flex-col">
+
+    <!-- Chosen Palette: Warm Minimalist Pro (Off-White #FDFCF8, Charcoal Text #2D3748, Gold Accent #C2A878, Bull Green #A3B18A, Bear Red #E07A5F) -->
+    <!-- Application Structure Plan: Sequential Crash Course Dashboard with 5 Modules. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50 border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 md:h-20">
+                <div class="flex items-center shrink-0">
+                    <div class="w-8 h-8 bg-[#2D3748] text-[#C2A878] font-bold flex items-center justify-center rounded-lg mr-3 shadow-inner">
+                        &#8383;
+                    </div>
+                    <span class="font-extrabold text-xl tracking-tight text-gray-900">Crypto<span class="text-[#C2A878]">Mastery</span></span>
+                </div>
+                
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex space-x-1 lg:space-x-4 items-center nav-scroller overflow-x-auto">
+                    <button data-target="module-1" class="nav-btn px-4 py-2 text-[#C2A878] border-b-2 border-[#C2A878] font-bold transition-all text-sm uppercase tracking-wide whitespace-nowrap">1. Fundamentals</button>
+                    <button data-target="module-2" class="nav-btn px-4 py-2 text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 font-bold transition-all text-sm uppercase tracking-wide whitespace-nowrap">2. Tech Analysis</button>
+                    <button data-target="module-3" class="nav-btn px-4 py-2 text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 font-bold transition-all text-sm uppercase tracking-wide whitespace-nowrap">3. Risk & Mindset</button>
+                    <button data-target="module-4" class="nav-btn px-4 py-2 text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 font-bold transition-all text-sm uppercase tracking-wide whitespace-nowrap">4. Pro Resources</button>
+                    <button data-target="module-5" class="nav-btn px-4 py-2 text-gray-500 hover:text-gray-900 border-b-2 border-transparent hover:border-gray-300 font-bold transition-all text-sm uppercase tracking-wide whitespace-nowrap">5. Strategies</button>
+                </div>
+
+                <!-- Mobile Nav Dropdown -->
+                <div class="md:hidden flex items-center w-48">
+                    <select id="mobile-nav" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm font-bold rounded-lg focus:ring-[#C2A878] focus:border-[#C2A878] block w-full p-2 shadow-sm">
+                        <option value="module-1">1. Fundamentals</option>
+                        <option value="module-2">2. Tech Analysis</option>
+                        <option value="module-3">3. Risk & Mindset</option>
+                        <option value="module-4">4. Pro Resources</option>
+                        <option value="module-5">5. Strategies</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12 w-full">
+
+        <!-- MODULE 1: FUNDAMENTALS -->
+        <section id="module-1" class="tab-content active">
+            <div class="mb-12 max-w-4xl">
+                <div class="inline-block bg-[#C2A878] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">Module 1</div>
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900 leading-tight">The Crypto Battlefield</h1>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    Cryptocurrency is the most volatile, 24/7 financial market in human history. To survive and thrive, you must first understand the macroeconomic cycles that drive institutional and retail money.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-[#4A5568] opacity-5 rounded-bl-full transition-transform group-hover:scale-110"></div>
+                    <div class="text-3xl mb-4 font-bold text-[#4A5568]">01. Spot vs. Margin</div>
+                    <p class="text-gray-600 mb-4"><strong>Spot Trading</strong> is buying the actual asset (e.g., holding 1 BTC). <strong>Margin/Derivatives</strong> involves borrowing funds to amplify gains (and losses). <br><br><span class="text-[#E07A5F] font-bold">Rule #1:</span> Never touch margin until you are profitable on Spot for 6 straight months.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-[#A3B18A] opacity-10 rounded-bl-full transition-transform group-hover:scale-110"></div>
+                    <div class="text-3xl mb-4 font-bold text-[#A3B18A]">02. Liquidity</div>
+                    <p class="text-gray-600">Crypto markets are driven by liquidity. Large players (Whales) need volume to enter/exit positions. They often push prices past obvious support/resistance levels to trigger retail stop-losses, creating the liquidity they need.</p>
+                </div>
+                <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-24 h-24 bg-[#C2A878] opacity-10 rounded-bl-full transition-transform group-hover:scale-110"></div>
+                    <div class="text-3xl mb-4 font-bold text-[#C2A878]">03. Narrative</div>
+                    <p class="text-gray-600">Tech is secondary; narrative is primary. Whether it's L1s, DeFi, NFTs, AI, or Memecoins, capital rotates based on attention. Pro traders track the narrative flow of capital, not just the underlying code.</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <h3 class="text-2xl font-bold mb-2">The Psychology of a Market Cycle</h3>
+                <p class="text-gray-600 mb-8">Markets move in distinct phases driven by human emotion: Fear and Greed. Identify where we are in the cycle to bias your trading direction.</p>
+                
+                <div class="chart-container">
+                    <canvas id="cycleChart"></canvas>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8 pt-6 border-t border-gray-100 text-sm">
+                    <div>
+                        <strong class="text-gray-900">1. Accumulation</strong>
+                        <p class="text-gray-500 mt-1">Smart money buys quietly while retail is bored or fearful.</p>
+                    </div>
+                    <div>
+                        <strong class="text-[#A3B18A]">2. Markup (Bull)</strong>
+                        <p class="text-gray-500 mt-1">Trend is established. Retail enters. Greed takes over.</p>
+                    </div>
+                    <div>
+                        <strong class="text-[#E07A5F]">3. Distribution</strong>
+                        <p class="text-gray-500 mt-1">Smart money sells to euphoric retail. High volatility.</p>
+                    </div>
+                    <div>
+                        <strong class="text-gray-900">4. Markdown (Bear)</strong>
+                        <p class="text-gray-500 mt-1">Panic selling. Price crashes back to intrinsic value.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-10 text-right">
+                <button onclick="document.querySelector('[data-target=\'module-2\']').click()" class="bg-[#2D3748] hover:bg-[#1a202c] text-white font-bold py-4 px-8 rounded-xl transition-colors shadow-lg">
+                    Next: Learn Technical Analysis &#8594;
+                </button>
+            </div>
+        </section>
+
+        <!-- MODULE 2: TECHNICAL ANALYSIS -->
+        <section id="module-2" class="tab-content">
+            <div class="mb-12 max-w-4xl">
+                <div class="inline-block bg-[#C2A878] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">Module 2</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900 leading-tight">Technical Analysis (TA)</h2>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    TA is the study of past price action to predict future probabilities. It is not a crystal ball; it is a framework for defining risk and identifying areas where supply and demand are likely to imbalance.
+                </p>
+            </div>
+
+            <!-- Candlestick Explainer using HTML/CSS -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-10">
+                <h3 class="text-2xl font-bold mb-6">1. Reading Candlesticks</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="flex justify-around items-center bg-gray-50 p-8 rounded-xl border border-gray-100">
+                        <div class="text-center group">
+                            <div class="candle-wrapper candle-bull transition-transform group-hover:scale-105">
+                                <div class="candle-wick"></div>
+                                <div class="candle-body"></div>
+                                <div class="absolute -top-6 text-xs font-bold text-gray-500 w-full text-center">High</div>
+                                <div class="absolute -bottom-6 text-xs font-bold text-gray-500 w-full text-center">Low</div>
+                                <div class="absolute top-[20%] -right-12 text-xs font-bold text-[#A3B18A]">Close</div>
+                                <div class="absolute bottom-[20%] -right-10 text-xs font-bold text-gray-500">Open</div>
+                            </div>
+                            <div class="mt-10 font-bold text-[#A3B18A] tracking-wider uppercase">Bullish</div>
+                        </div>
+
+                        <div class="text-center group">
+                            <div class="candle-wrapper candle-bear transition-transform group-hover:scale-105">
+                                <div class="candle-wick"></div>
+                                <div class="candle-body"></div>
+                                <div class="absolute -top-6 text-xs font-bold text-gray-500 w-full text-center">High</div>
+                                <div class="absolute -bottom-6 text-xs font-bold text-gray-500 w-full text-center">Low</div>
+                                <div class="absolute top-[20%] -right-10 text-xs font-bold text-gray-500">Open</div>
+                                <div class="absolute bottom-[20%] -right-12 text-xs font-bold text-[#E07A5F]">Close</div>
+                            </div>
+                            <div class="mt-10 font-bold text-[#E07A5F] tracking-wider uppercase">Bearish</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p class="text-gray-600 mb-4">Candlesticks display price action over a specific timeframe (e.g., 1 Hour, 1 Day). They tell a story of the battle between buyers (bulls) and sellers (bears).</p>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <div class="min-w-6 font-bold text-[#A3B18A] mt-1">&#9650;</div>
+                                <div>
+                                    <strong class="text-gray-900">The Body:</strong> Shows the difference between the open and close price. A large body indicates strong momentum.
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <div class="min-w-6 font-bold text-[#C2A878] mt-1">&#124;</div>
+                                <div>
+                                    <strong class="text-gray-900">The Wick (Shadow):</strong> Shows the highest and lowest prices reached during the timeframe. Long wicks indicate rejection.
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Trend & Moving Averages -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 mb-10">
+                <h3 class="text-2xl font-bold mb-2">2. Trend Analysis & Moving Averages</h3>
+                <p class="text-gray-600 mb-8">"The trend is your friend until the end when it bends." Moving Averages (MA) smooth out price data to identify the overarching trend.</p>
+                
+                <div class="chart-container">
+                    <canvas id="trendChart"></canvas>
+                </div>
+
+                <div class="mt-6 p-4 bg-blue-50 border-l-4 border-blue-400 rounded-r-lg">
+                    <h4 class="font-bold text-blue-800 flex items-center">
+                        <span class="mr-2 text-xl">&#8505;</span> Pro Tip: Confluence
+                    </h4>
+                    <p class="text-sm text-blue-700 mt-1">Never trade based on one indicator. Look for <strong>confluence</strong>—when multiple signals align (e.g., price hits structural support AND the RSI is oversold AND a bullish candlestick pattern forms).</p>
+                </div>
+            </div>
+
+            <!-- Classic Chart Patterns Gallery -->
+            <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <div class="flex justify-between items-end mb-6">
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">3. Classic Chart Patterns</h3>
+                        <p class="text-gray-600">Patterns reveal the psychological battle between buyers and sellers. Pros use them to identify breakout zones and set logical stop losses.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="pattern-gallery">
+                    <!-- Pattern Cards injected here via JS -->
+                </div>
+            </div>
+
+            <div class="mt-10 flex justify-between">
+                <button onclick="document.querySelector('[data-target=\'module-1\']').click()" class="text-gray-500 font-bold py-4 px-6 hover:text-gray-900 transition-colors">
+                    &#8592; Back
+                </button>
+                <button onclick="document.querySelector('[data-target=\'module-3\']').click()" class="bg-[#2D3748] hover:bg-[#1a202c] text-white font-bold py-4 px-8 rounded-xl transition-colors shadow-lg">
+                    Next: Risk & Mindset &#8594;
+                </button>
+            </div>
+        </section>
+
+        <!-- MODULE 3: RISK & MINDSET -->
+        <section id="module-3" class="tab-content">
+             <div class="mb-12 max-w-4xl">
+                <div class="inline-block bg-[#C2A878] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">Module 3</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900 leading-tight">Risk & Trading Psychology</h2>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    Strategy gets you in the door; risk management keeps you in the game; psychology decides if you win. If you skip this module, you will lose your money. Guaranteed.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                <!-- Position Sizer Calculator -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <h3 class="text-2xl font-bold mb-2">The Pro Position Sizer</h3>
+                    <p class="text-sm text-gray-500 mb-6">Amateurs buy a random dollar amount (e.g., "$500 of ETH"). Pros risk a precise percentage of their total equity. Calculate your exact position size below.</p>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 mb-2">Total Account Equity ($)</label>
+                            <input type="number" id="calc-balance" value="10000" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#C2A878] focus:border-transparent transition-all outline-none text-lg">
+                        </div>
+                        <div class="flex space-x-4">
+                            <div class="w-1/2">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Risk % per Trade</label>
+                                <select id="calc-risk" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#C2A878] outline-none text-lg">
+                                    <option value="0.5">0.5% (Conservative)</option>
+                                    <option value="1.0" selected>1.0% (Standard)</option>
+                                    <option value="2.0">2.0% (Aggressive)</option>
+                                </select>
+                            </div>
+                            <div class="w-1/2">
+                                <label class="block text-sm font-bold text-gray-700 mb-2">Stop Loss (%)</label>
+                                <input type="number" id="calc-sl-pct" value="5" class="w-full p-4 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-[#C2A878] transition-all outline-none text-lg">
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 p-6 bg-[#2D3748] text-white rounded-xl shadow-inner relative overflow-hidden">
+                            <div class="absolute top-0 right-0 w-32 h-32 bg-white opacity-5 rounded-full -mr-10 -mt-10"></div>
+                            <div class="flex justify-between items-center mb-4 border-b border-gray-600 pb-4">
+                                <span class="font-medium text-gray-300">Amount at Risk:</span>
+                                <span class="text-2xl font-bold text-[#E07A5F]" id="out-risk-amount">$100.00</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-medium text-gray-300">Total Position Size:</span>
+                                <span class="text-3xl font-extrabold text-[#C2A878]" id="out-position-size">$2,000.00</span>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-4 leading-tight">Buy $2,000 worth of the asset. If it drops 5% (hitting your stop loss), you only lose $100 (1% of your account).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Psychology & RR Charts -->
+                <div class="space-y-8">
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col">
+                        <h3 class="text-xl font-bold mb-1">Win Rate vs. Reward/Risk (R:R)</h3>
+                        <p class="text-xs text-gray-500 mb-4">You do not need to be right 80% of the time. If your winners are 3x larger than your losers, you only need a 30% win rate to be profitable.</p>
+                        <div class="chart-container-small">
+                            <canvas id="riskChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+                        <h3 class="text-xl font-bold mb-4">Why Retail Traders Fail</h3>
+                        <div class="flex flex-col sm:flex-row items-center">
+                            <div class="w-full sm:w-1/2 h-48 relative">
+                                <canvas id="psychChart"></canvas>
+                            </div>
+                            <div class="w-full sm:w-1/2 mt-4 sm:mt-0 sm:pl-6 text-sm">
+                                <ul class="space-y-3">
+                                    <li class="flex items-center"><span class="w-3 h-3 bg-[#E07A5F] inline-block rounded-sm mr-2"></span> Revenge Trading (35%)</li>
+                                    <li class="flex items-center"><span class="w-3 h-3 bg-[#A3B18A] inline-block rounded-sm mr-2"></span> FOMO / Greed (30%)</li>
+                                    <li class="flex items-center"><span class="w-3 h-3 bg-[#C2A878] inline-block rounded-sm mr-2"></span> Fear / Hesitation (20%)</li>
+                                    <li class="flex items-center"><span class="w-3 h-3 bg-gray-300 inline-block rounded-sm mr-2"></span> Strategy Failure (15%)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-10 flex justify-between">
+                <button onclick="document.querySelector('[data-target=\'module-2\']').click()" class="text-gray-500 font-bold py-4 px-6 hover:text-gray-900 transition-colors">
+                    &#8592; Back
+                </button>
+                <button onclick="document.querySelector('[data-target=\'module-4\']').click()" class="bg-[#2D3748] hover:bg-[#1a202c] text-white font-bold py-4 px-8 rounded-xl transition-colors shadow-lg">
+                    Next: Pro Resources &#8594;
+                </button>
+            </div>
+        </section>
+
+        <!-- MODULE 4: PRO RESOURCES -->
+        <section id="module-4" class="tab-content">
+            <div class="mb-12 max-w-4xl">
+                <div class="inline-block bg-[#C2A878] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">Module 4</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900 leading-tight">The Pro Roster & Toolkit</h2>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    Trading is an information war. Arm yourself with the right tools and surround your feed with verified, educational professionals, not engagement farmers.
+                </p>
+            </div>
+
+            <h3 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Essential Toolkit</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-[#C2A878] transition-colors cursor-pointer group">
+                    <div class="text-2xl mb-2 font-bold text-gray-900 group-hover:text-[#C2A878] transition-colors">TradingView</div>
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Charting / TA</div>
+                    <p class="text-sm text-gray-600">The industry standard for charting. Do your analysis here, execute on your exchange.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-[#C2A878] transition-colors cursor-pointer group">
+                    <div class="text-2xl mb-2 font-bold text-gray-900 group-hover:text-[#C2A878] transition-colors">CoinGlass</div>
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Derivatives Data</div>
+                    <p class="text-sm text-gray-600">Track liquidations, open interest, and funding rates to understand where institutional money is trapped.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:border-[#C2A878] transition-colors cursor-pointer group">
+                    <div class="text-2xl mb-2 font-bold text-gray-900 group-hover:text-[#C2A878] transition-colors">DefiLlama</div>
+                    <div class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">On-Chain Analytics</div>
+                    <p class="text-sm text-gray-600">Track Total Value Locked (TVL) across blockchains to spot emerging fundamental narratives.</p>
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold mb-6 text-gray-800 border-b pb-2">Verified Traders to Study</h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <!-- Mentors -->
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 text-center p-6 hover:shadow-md transition-shadow">
+                    <div class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold text-gray-500">CC</div>
+                    <h4 class="font-bold text-lg text-gray-900">Credible Crypto</h4>
+                    <p class="text-xs text-[#C2A878] font-bold mb-3 uppercase tracking-wide">Elliott Wave Theory</p>
+                    <button class="w-full border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-50">Study Profile</button>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 text-center p-6 hover:shadow-md transition-shadow">
+                    <div class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold text-gray-500">EB</div>
+                    <h4 class="font-bold text-lg text-gray-900">EmperorBTC</h4>
+                    <p class="text-xs text-[#A3B18A] font-bold mb-3 uppercase tracking-wide">Price Action / Volume</p>
+                    <button class="w-full border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-50">Study Profile</button>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 text-center p-6 hover:shadow-md transition-shadow">
+                    <div class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold text-gray-500">C</div>
+                    <h4 class="font-bold text-lg text-gray-900">Cobie</h4>
+                    <p class="text-xs text-[#E07A5F] font-bold mb-3 uppercase tracking-wide">Market Psychology</p>
+                    <button class="w-full border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-50">Study Profile</button>
+                </div>
+                <div class="bg-white rounded-xl shadow-sm border border-gray-100 text-center p-6 hover:shadow-md transition-shadow">
+                    <div class="w-16 h-16 bg-gray-200 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold text-gray-500">P</div>
+                    <h4 class="font-bold text-lg text-gray-900">Pentoshi</h4>
+                    <p class="text-xs text-[#4A5568] font-bold mb-3 uppercase tracking-wide">Macro / Narrative</p>
+                    <button class="w-full border border-gray-300 text-gray-700 py-2 rounded-lg text-sm font-bold hover:bg-gray-50">Study Profile</button>
+                </div>
+            </div>
+
+            <div class="mt-10 flex justify-between">
+                <button onclick="document.querySelector('[data-target=\'module-3\']').click()" class="text-gray-500 font-bold py-4 px-6 hover:text-gray-900 transition-colors">
+                    &#8592; Back
+                </button>
+                <button onclick="document.querySelector('[data-target=\'module-5\']').click()" class="bg-[#2D3748] hover:bg-[#1a202c] text-white font-bold py-4 px-8 rounded-xl transition-colors shadow-lg">
+                    Next: Pro Strategies &#8594;
+                </button>
+            </div>
+        </section>
+
+        <!-- MODULE 5: PRO STRATEGIES -->
+        <section id="module-5" class="tab-content">
+            <div class="mb-8 max-w-4xl">
+                <div class="inline-block bg-[#C2A878] text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest mb-3">Module 5</div>
+                <h2 class="text-4xl md:text-5xl font-extrabold mb-6 text-gray-900 leading-tight">Actionable Playbook</h2>
+                <p class="text-xl text-gray-600 leading-relaxed">
+                    Select a strategy from the roster below to view its mechanics, risk profile, and a simulated chart setup showing exactly when to enter and exit.
+                </p>
+            </div>
+
+            <!-- Strategy Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-10" id="strategy-grid">
+                <!-- Cards injected via JS -->
+            </div>
+
+            <!-- Interactive Chart & Breakdown -->
+            <div class="bg-white rounded-2xl p-6 md:p-8 shadow-sm border border-gray-200">
+                <div class="flex flex-col lg:flex-row gap-8">
+                    <!-- Strategy Details -->
+                    <div class="lg:w-1/3 flex flex-col justify-center">
+                        <div id="strat-active-icon" class="text-4xl mb-4 text-gray-800">&#9889;</div>
+                        <h3 id="strat-active-title" class="text-3xl font-bold text-gray-900 mb-2">EMA Trend Scalper</h3>
+                        <div class="mb-4">
+                            <span id="strat-active-risk" class="text-xs font-bold px-2 py-1 rounded uppercase tracking-wide bg-yellow-100 text-yellow-800 border border-yellow-200">Medium Risk</span>
+                        </div>
+                        <p id="strat-active-desc" class="text-gray-600 mb-6 leading-relaxed">
+                            Trend-following momentum. Reclaim VWAP + EMA 9/21 cross. Wait for price to pull back to the 21 EMA in a strong uptrend and reject downwards movement.
+                        </p>
+                        
+                        <div class="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                            <h4 class="font-bold text-sm text-gray-900 uppercase tracking-wider mb-3">Execution Plan</h4>
+                            <ul class="space-y-3 text-sm text-gray-600">
+                                <li class="flex items-start">
+                                    <span class="text-[#A3B18A] font-bold mr-2">&#10003;</span>
+                                    <span id="strat-entry"><strong>Entry:</strong> Price bounces off 21 EMA (orange line) while 9 EMA (blue line) remains above 21 EMA.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-[#E07A5F] font-bold mr-2">&#10007;</span>
+                                    <span id="strat-sl"><strong>Stop Loss:</strong> Close below the 21 EMA.</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-[#C2A878] font-bold mr-2">&#8594;</span>
+                                    <span id="strat-tp"><strong>Take Profit:</strong> Ride the 9 EMA until price closes below it, or target previous swing high.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Chart Area -->
+                    <div class="lg:w-2/3 w-full relative">
+                        <div class="absolute top-2 right-4 z-10 flex space-x-4 text-xs font-bold">
+                            <div id="strat-legend-1" class="flex items-center text-gray-600"><span class="w-3 h-3 bg-[#4A90E2] rounded-full mr-2"></span> Fast Line</div>
+                            <div id="strat-legend-2" class="flex items-center text-gray-600"><span class="w-3 h-3 bg-[#F5A623] rounded-full mr-2"></span> Slow Line</div>
+                        </div>
+                        <div class="chart-container" style="height: 400px; max-height: 450px;">
+                            <canvas id="strategyActiveChart"></canvas>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            
+            <div class="bg-[#2D3748] text-white rounded-2xl p-8 text-center shadow-lg mt-12">
+                <div class="text-4xl mb-4">&#127942;</div>
+                <h3 class="text-3xl font-bold mb-4">You are now ready.</h3>
+                <p class="text-gray-300 mb-6 max-w-2xl mx-auto">Do not deposit real money yet. Open a TradingView paper trading account, apply the risk management math from Module 3, and log 100 simulated trades using one specific strategy from Module 5.</p>
+                <button onclick="window.scrollTo(0,0)" class="bg-[#C2A878] hover:bg-[#b09665] text-white font-bold py-3 px-8 rounded-full transition-colors">
+                    Back to Top
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-white border-t border-gray-200 py-8 text-center">
+        <p class="text-gray-500 text-sm font-medium flex justify-center items-center">
+            <span class="w-4 h-4 bg-[#2D3748] text-[#C2A878] text-[8px] flex items-center justify-center rounded-sm mr-2">&#8383;</span>
+            CryptoMastery Educational Framework. Trading involves significant risk.
+        </p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Navigation Logic ---
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const mobileSelect = document.getElementById('mobile-nav');
+            let chartsInitialized = false;
+
+            function switchTab(targetId) {
+                tabContents.forEach(content => content.classList.remove('active'));
+                navButtons.forEach(btn => {
+                    btn.classList.remove('text-[#C2A878]', 'border-[#C2A878]');
+                    btn.classList.add('text-gray-500', 'border-transparent');
+                });
+
+                document.getElementById(targetId).classList.add('active');
+                const activeBtn = document.querySelector(`[data-target="${targetId}"]`);
+                if(activeBtn) {
+                    activeBtn.classList.remove('text-gray-500', 'border-transparent');
+                    activeBtn.classList.add('text-[#C2A878]', 'border-[#C2A878]');
+                }
+                
+                if(mobileSelect.value !== targetId) mobileSelect.value = targetId;
+
+                if (!chartsInitialized) {
+                    initCharts();
+                    chartsInitialized = true;
+                } else {
+                     setTimeout(() => { window.dispatchEvent(new Event('resize')); }, 50);
+                }
+                window.scrollTo(0, 0);
+            }
+
+            navButtons.forEach(btn => btn.addEventListener('click', (e) => switchTab(e.target.getAttribute('data-target'))));
+            mobileSelect.addEventListener('change', (e) => switchTab(e.target.value));
+
+            // --- Calculator Logic (Module 3) ---
+            const balInput = document.getElementById('calc-balance');
+            const riskInput = document.getElementById('calc-risk');
+            const slInput = document.getElementById('calc-sl-pct');
+            const outRisk = document.getElementById('out-risk-amount');
+            const outPos = document.getElementById('out-position-size');
+
+            function calculatePosition() {
+                const balance = parseFloat(balInput.value) || 0;
+                const riskPct = parseFloat(riskInput.value) || 0;
+                const slPct = parseFloat(slInput.value) || 0;
+                const riskAmount = balance * (riskPct / 100);
+                let positionSize = slPct > 0 ? riskAmount / (slPct / 100) : 0;
+
+                const formatter = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' });
+                outRisk.textContent = formatter.format(riskAmount);
+                outPos.textContent = formatter.format(positionSize);
+            }
+            [balInput, riskInput, slInput].forEach(input => input.addEventListener('input', calculatePosition));
+            calculatePosition();
+
+            // --- Chart Global Settings ---
+            Chart.defaults.font.family = "'Inter', sans-serif";
+            Chart.defaults.color = '#718096';
+            Chart.defaults.plugins.tooltip.backgroundColor = 'rgba(45, 55, 72, 0.9)';
+            Chart.defaults.plugins.tooltip.titleFont = { size: 14, weight: 'bold' };
+            Chart.defaults.plugins.tooltip.padding = 12;
+            Chart.defaults.plugins.tooltip.cornerRadius = 8;
+
+            function initCharts() {
+                // 1. Market Cycle Chart
+                const ctxCycle = document.getElementById('cycleChart').getContext('2d');
+                const cycleLabels = Array.from({length: 100}, (_, i) => i);
+                const cycleData = cycleLabels.map(x => (Math.sin(x / 10) * 40) + (x * 0.5) + 20);
+
+                new Chart(ctxCycle, {
+                    type: 'line',
+                    data: {
+                        labels: cycleLabels,
+                        datasets: [{
+                            label: 'Market Value',
+                            data: cycleData,
+                            borderColor: '#2D3748',
+                            borderWidth: 3,
+                            pointRadius: 0,
+                            pointHoverRadius: 6,
+                            tension: 0.4,
+                            fill: { target: 'origin', above: 'rgba(194, 168, 120, 0.1)' }
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        interaction: { mode: 'index', intersect: false },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    title: () => 'Phase Analysis',
+                                    label: (c) => c.dataIndex < 25 ? ' Accumulation' : c.dataIndex < 55 ? ' Markup (Bull)' : c.dataIndex < 75 ? ' Distribution' : ' Markdown (Bear)'
+                                }
+                            }
+                        },
+                        scales: { x: { display: false }, y: { display: false, min: 0 } }
+                    }
+                });
+
+                // 2. Trend Chart (Module 2)
+                const ctxTrend = document.getElementById('trendChart').getContext('2d');
+                let price = 40000;
+                const trendPriceData = [], ma50Data = [], ma200Data = [];
+                for(let i=0; i<150; i++) {
+                    price += (Math.random() - 0.48) * 1500;
+                    trendPriceData.push(price);
+                    ma50Data.push(i > 10 ? trendPriceData.slice(i-10, i).reduce((a,b)=>a+b)/10 : null);
+                    ma200Data.push(i > 30 ? trendPriceData.slice(i-30, i).reduce((a,b)=>a+b)/30 : null);
+                }
+                new Chart(ctxTrend, {
+                    type: 'line',
+                    data: {
+                        labels: Array.from({length: 150}, (_, i) => `Day ${i+1}`),
+                        datasets: [
+                            { label: 'Price Action', data: trendPriceData, borderColor: '#2D3748', borderWidth: 2, pointRadius: 0, tension: 0.1 },
+                            { label: '50 MA', data: ma50Data, borderColor: '#C2A878', borderWidth: 2, borderDash: [5, 5], pointRadius: 0, tension: 0.4 },
+                            { label: '200 MA', data: ma200Data, borderColor: '#A3B18A', borderWidth: 3, pointRadius: 0, tension: 0.4 }
+                        ]
+                    },
+                    options: { maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, scales: { x: { display: false } } }
+                });
+
+                // 3. Risk Scatter Chart (Module 3)
+                const ctxRisk = document.getElementById('riskChart').getContext('2d');
+                const scatterData = [];
+                for(let wr = 20; wr <= 80; wr += 5) {
+                    for(let rr = 0.5; rr <= 4.0; rr += 0.5) {
+                        const exp = (wr/100 * rr) - ((100-wr)/100 * 1);
+                        if(exp > 0.1 && rr < 3.5 && wr > 30) scatterData.push({x: rr, y: wr, type: 'prof'});
+                        else if (exp < 0) scatterData.push({x: rr, y: wr, type: 'loss'});
+                    }
+                }
+                new Chart(ctxRisk, {
+                    type: 'scatter',
+                    data: {
+                        datasets: [
+                            { label: 'Profitable Zone', data: scatterData.filter(d => d.type === 'prof'), backgroundColor: '#A3B18A', pointRadius: 5 },
+                            { label: 'Losing Zone', data: scatterData.filter(d => d.type === 'loss'), backgroundColor: '#E07A5F', pointRadius: 3 }
+                        ]
+                    },
+                    options: { maintainAspectRatio: false, plugins: { legend: { position: 'bottom' } }, scales: { x: { title: { display: true, text: 'Reward:Risk' } }, y: { title: { display: true, text: 'Win Rate (%)' }, min: 0, max: 100 } } }
+                });
+
+                // 4. Psych Doughnut (Module 3)
+                const ctxPsych = document.getElementById('psychChart').getContext('2d');
+                new Chart(ctxPsych, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Revenge Trading', 'FOMO', 'Fear', 'Strategy'],
+                        datasets: [{ data: [35, 30, 20, 15], backgroundColor: ['#E07A5F', '#A3B18A', '#C2A878', '#E2E8F0'], borderWidth: 0 }]
+                    },
+                    options: { maintainAspectRatio: false, plugins: { legend: { display: false } }, cutout: '70%' }
+                });
+
+                renderPatternGallery();
+            }
+
+            // --- Custom Canvas Chart Pattern Drawing Engine (Module 2) ---
+            const chartPatterns = [
+                { id: 'sym-tri', name: 'Symmetrical Triangle', type: 'Continuation', bias: 'Bullish', biasColor: 'text-[#A3B18A]', bgBias: 'bg-[#A3B18A]', use: 'Wait for a high-volume breakout above the descending resistance line.', lines: [ [[10, 10], [180, 50]], [[10, 90], [180, 50]] ], price: [[10, 90], [50, 20], [90, 70], [130, 35], [160, 60], [190, 15]] },
+                { id: 'asc-tri', name: 'Ascending Triangle', type: 'Continuation', bias: 'Bullish', biasColor: 'text-[#A3B18A]', bgBias: 'bg-[#A3B18A]', use: 'Indicates aggressive buyers. Buy the breakout above the flat top.', lines: [ [[10, 20], [180, 20]], [[10, 90], [180, 20]] ], price: [[10, 90], [45, 20], [80, 65], [115, 20], [150, 45], [180, -10]] },
+                { id: 'head-shoulders', name: 'Head & Shoulders', type: 'Reversal', bias: 'Bearish', biasColor: 'text-[#E07A5F]', bgBias: 'bg-[#E07A5F]', use: 'Signals exhaustion. Short when price breaks below the "neckline" support.', lines: [ [[10, 80], [190, 80]] ], price: [[10, 80], [40, 40], [70, 80], [100, 10], [130, 80], [160, 50], [190, 110]] },
+                { id: 'double-bottom', name: 'Double Bottom', type: 'Reversal', bias: 'Bullish', biasColor: 'text-[#A3B18A]', bgBias: 'bg-[#A3B18A]', use: 'Defense of a support zone. Buy when price breaks above the middle peak.', lines: [ [[10, 30], [190, 30]], [[10, 90], [190, 90]] ], price: [[10, 30], [50, 90], [100, 30], [150, 90], [190, 0]] },
+                { id: 'bull-flag', name: 'Bull Flag', type: 'Continuation', bias: 'Bullish', biasColor: 'text-[#A3B18A]', bgBias: 'bg-[#A3B18A]', use: 'A brief consolidation channel after an impulsive pump. Buy the breakout.', lines: [ [[60, 30], [140, 60]], [[60, 60], [140, 90]] ], price: [[20, 100], [60, 30], [80, 65], [100, 45], [120, 80], [160, 10]] },
+                { id: 'falling-wedge', name: 'Falling Wedge', type: 'Reversal', bias: 'Bullish', biasColor: 'text-[#A3B18A]', bgBias: 'bg-[#A3B18A]', use: 'Sellers losing momentum. Buy the breakout of the upper resistance line.', lines: [ [[10, 10], [180, 75]], [[10, 50], [180, 90]] ], price: [[10, 10], [40, 60], [80, 35], [120, 75], [150, 60], [190, 20]] }
+            ];
+
+            function renderPatternGallery() {
+                const container = document.getElementById('pattern-gallery');
+                container.innerHTML = ''; 
+                chartPatterns.forEach(pattern => {
+                    const card = document.createElement('div');
+                    card.className = 'border border-gray-200 rounded-xl p-5 bg-gray-50 flex flex-col';
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-3">
+                            <h4 class="font-bold text-gray-900">${pattern.name}</h4>
+                            <div class="flex flex-col items-end">
+                                <span class="text-[10px] font-bold uppercase tracking-wider text-gray-400">${pattern.type}</span>
+                                <span class="text-xs font-bold ${pattern.biasColor} flex items-center mt-1">
+                                    <span class="w-2 h-2 rounded-full ${pattern.bgBias} mr-1"></span>${pattern.bias}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="w-full h-32 bg-white border border-gray-200 rounded-lg mb-4 flex justify-center items-center overflow-hidden">
+                            <canvas id="canvas-${pattern.id}" width="200" height="120" class="w-full h-full object-contain p-2"></canvas>
+                        </div>
+                        <p class="text-xs text-gray-600 leading-relaxed mt-auto border-t border-gray-200 pt-3">
+                            <strong class="text-gray-800">Pro Use:</strong> ${pattern.use}
+                        </p>
+                    `;
+                    container.appendChild(card);
+
+                    const ctx = document.getElementById(`canvas-${pattern.id}`).getContext('2d');
+                    ctx.strokeStyle = '#94A3B8'; ctx.lineWidth = 2; ctx.setLineDash([4, 4]);
+                    pattern.lines.forEach(line => { ctx.beginPath(); ctx.moveTo(line[0][0], line[0][1]); ctx.lineTo(line[1][0], line[1][1]); ctx.stroke(); });
+
+                    ctx.setLineDash([]); ctx.strokeStyle = pattern.bias === 'Bullish' ? '#A3B18A' : '#E07A5F'; ctx.lineWidth = 3; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+                    ctx.beginPath(); ctx.moveTo(pattern.price[0][0], pattern.price[0][1]);
+                    for(let i=1; i<pattern.price.length; i++) ctx.lineTo(pattern.price[i][0], pattern.price[i][1]);
+                    ctx.stroke();
+
+                    const lastPt = pattern.price[pattern.price.length - 1], prevPt = pattern.price[pattern.price.length - 2];
+                    const angle = Math.atan2(lastPt[1] - prevPt[1], lastPt[0] - prevPt[0]);
+                    ctx.beginPath(); ctx.moveTo(lastPt[0], lastPt[1]); ctx.lineTo(lastPt[0] - 8 * Math.cos(angle - Math.PI/6), lastPt[1] - 8 * Math.sin(angle - Math.PI/6)); ctx.lineTo(lastPt[0] - 8 * Math.cos(angle + Math.PI/6), lastPt[1] - 8 * Math.sin(angle + Math.PI/6)); ctx.lineTo(lastPt[0], lastPt[1]); ctx.fillStyle = ctx.strokeStyle; ctx.fill();
+                });
+            }
+
+            // --- Module 5: Pro Strategies Logic ---
+            // Contains all 8 strategies from the uploaded image
+            const strategies = [
+                { id: 'ema', icon: '&#9889;', title: 'EMA Trend Scalper', risk: 'Medium Risk', riskClass: 'bg-yellow-100 text-yellow-800 border-yellow-200', desc: 'Trend-following momentum. Reclaim VWAP + EMA 9/21 cross. Ideal for catching massive intraday moves.', entry: 'Price bounces off 21 EMA while 9 EMA remains above 21 EMA.', sl: 'Candle close below the 21 EMA.', tp: 'Hold until price closes below the fast 9 EMA.', leg1: '<span class="w-3 h-3 bg-[#4A90E2] rounded-full mr-2"></span> EMA 9', leg2: '<span class="w-3 h-3 bg-[#F5A623] rounded-full mr-2"></span> EMA 21' },
+                { id: 'smc', icon: '&#127919;', title: 'Smart Money Concepts', risk: 'Low Risk', riskClass: 'bg-green-100 text-green-800 border-green-200', desc: 'Structure shift entries. Trade 15m order block pullbacks after a change of character (ChoCh) on the higher timeframe.', entry: 'Price taps into an unmitigated Order Block (OB) with a strong rejection.', sl: 'Slightly below the Order Block.', tp: 'Target liquidity pools (previous swing highs/lows).' , leg1: '<span class="w-3 h-3 bg-[#CBD5E1] rounded-sm mr-2"></span> Price Action', leg2: '<span class="w-3 h-3 border-2 border-[#A3B18A] bg-[#A3B18A] bg-opacity-20 rounded-sm mr-2"></span> Order Block' },
+                { id: 'rsi', icon: '&#128200;', title: 'RSI Divergence Reversal', risk: 'Medium Risk', riskClass: 'bg-yellow-100 text-yellow-800 border-yellow-200', desc: 'Contrarian reversal. Catch RSI divergences at macro support/resistance levels to identify exhausting trends.', entry: 'Price makes a Lower Low, but RSI makes a Higher Low (Bullish Divergence).', sl: 'Below the new macro swing low.', tp: 'Target the nearest major resistance level.', leg1: '<span class="w-3 h-3 bg-[#2D3748] rounded-full mr-2"></span> Price', leg2: '<span class="w-3 h-3 bg-[#9F7AEA] rounded-full mr-2"></span> RSI Indicator' },
+                { id: 'funding', icon: '&#127956;', title: 'Funding Rate Fade', risk: 'High Risk', riskClass: 'bg-red-100 text-red-800 border-red-200', desc: 'Crowd-fading mean reversion. Reversing the market when derivatives funding rates hit extreme positive/negative levels.', entry: 'Funding hits >0.1% (Extreme Longs) and price stalls at resistance. Short the market.', sl: 'Above the peak of the euphoric push.', tp: 'Target previous consolidation range.', leg1: '<span class="w-3 h-3 bg-[#2D3748] rounded-full mr-2"></span> Price Action', leg2: '<span class="w-3 h-3 bg-[#E07A5F] rounded-full mr-2"></span> Funding Rate %' },
+                { id: 'vwap', icon: '&#127754;', title: 'VWAP Deviation Bounce', risk: 'Low Risk', riskClass: 'bg-green-100 text-green-800 border-green-200', desc: 'Range-bound bounce. Enter on rejections of +/- 2.0 Standard Deviations from the VWAP (Volume Weighted Average Price).', entry: 'Price pierces the 2nd Deviation band and closes back inside.', sl: 'Just outside the piercing wick.', tp: 'Target the central VWAP line.', leg1: '<span class="w-3 h-3 border border-blue-400 border-dashed rounded-sm mr-2"></span> +/- 2.0 SD Bands', leg2: '<span class="w-3 h-3 bg-[#4A90E2] rounded-full mr-2"></span> VWAP Baseline' },
+                { id: 'vol', icon: '&#128293;', title: 'Breakout & Volume Profile', risk: 'Medium Risk', riskClass: 'bg-yellow-100 text-yellow-800 border-yellow-200', desc: 'Volume-confirmed breakouts. Play moves escaping a high-volume node into a low-volume void (fast moves).', entry: 'Price breaks above the Point of Control (POC) with expanding volume.', sl: 'Below the high-volume node.', tp: 'The next high-volume resistance node.', leg1: '<span class="w-3 h-3 bg-[#2D3748] rounded-full mr-2"></span> Price Action', leg2: '<span class="w-3 h-3 bg-gray-300 rounded-sm mr-2"></span> Volume Node (POC)' },
+                { id: 'bb', icon: '&#128202;', title: 'Bollinger Mean Reversion', risk: 'Medium Risk', riskClass: 'bg-yellow-100 text-yellow-800 border-yellow-200', desc: 'Bollinger Bands mean-reversion. Enter on outer band piercings when market is in a confirmed sideways range.', entry: 'Price pierces lower band and closes back inside the band.', sl: 'Just below the wick of the piercing candle.', tp: 'Target the midline (Basis MA), hold runner to upper band.', leg1: '<span class="w-3 h-3 border border-red-400 border-dashed rounded-sm mr-2"></span> Upper/Lower Bands', leg2: '<span class="w-3 h-3 bg-gray-400 rounded-full mr-2"></span> Basis (MA 20)' },
+                { id: 'macd', icon: '&#128640;', title: 'MACD Momentum Rider', risk: 'Medium Risk', riskClass: 'bg-yellow-100 text-yellow-800 border-yellow-200', desc: 'Trend-following momentum. Align with EMA 50/200 and enter on MACD histogram expansion.', entry: 'Price above 200 EMA. MACD line crosses above Signal line, histogram turns green.', sl: 'Below the recent swing low.', tp: 'When MACD histogram starts printing lighter green/losing momentum.', leg1: '<span class="w-3 h-3 bg-[#4A90E2] rounded-full mr-2"></span> MACD Line', leg2: '<span class="w-3 h-3 bg-[#A3B18A] rounded-sm mr-2"></span> Histogram' }
+            ];
+
+            function initStrategyGrid() {
+                const grid = document.getElementById('strategy-grid');
+                grid.innerHTML = '';
+                strategies.forEach((strat, index) => {
+                    const card = document.createElement('div');
+                    card.className = `p-5 rounded-xl border cursor-pointer transition-all duration-200 hover:shadow-md flex flex-col h-full bg-white
+                                      ${index === 0 ? 'border-[#C2A878] shadow-sm ring-1 ring-[#C2A878]' : 'border-gray-200 hover:border-gray-300'}`;
+                    card.dataset.id = strat.id;
+                    card.innerHTML = `
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-2xl">${strat.icon}</span>
+                            <span class="text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide border ${strat.riskClass}">${strat.risk}</span>
+                        </div>
+                        <h4 class="font-bold text-gray-900 mb-2 text-sm">${strat.title}</h4>
+                        <p class="text-xs text-gray-500 line-clamp-3 leading-relaxed">${strat.desc}</p>
+                    `;
+                    card.addEventListener('click', () => {
+                        Array.from(grid.children).forEach(c => c.className = 'p-5 rounded-xl border cursor-pointer transition-all duration-200 hover:shadow-md flex flex-col h-full bg-white border-gray-200 hover:border-gray-300');
+                        card.className = 'p-5 rounded-xl border cursor-pointer transition-all duration-200 hover:shadow-md flex flex-col h-full bg-white border-[#C2A878] shadow-sm ring-1 ring-[#C2A878]';
+                        updateStrategyView(strat);
+                    });
+                    grid.appendChild(card);
+                });
+            }
+
+            let activeStrategyChart = null;
+
+            function updateStrategyView(strat) {
+                document.getElementById('strat-active-icon').innerHTML = strat.icon;
+                document.getElementById('strat-active-title').innerText = strat.title;
+                const riskBadge = document.getElementById('strat-active-risk');
+                riskBadge.className = `text-[10px] font-bold px-2 py-1 rounded uppercase tracking-wide border ${strat.riskClass}`;
+                riskBadge.innerText = strat.risk;
+                document.getElementById('strat-active-desc').innerText = strat.desc;
+                document.getElementById('strat-entry').innerHTML = `<strong>Entry:</strong> ${strat.entry}`;
+                document.getElementById('strat-sl').innerHTML = `<strong>Stop Loss:</strong> ${strat.sl}`;
+                document.getElementById('strat-tp').innerHTML = `<strong>Take Profit:</strong> ${strat.tp}`;
+                document.getElementById('strat-legend-1').innerHTML = strat.leg1;
+                document.getElementById('strat-legend-2').innerHTML = strat.leg2;
+
+                if(activeStrategyChart) activeStrategyChart.destroy();
+                const ctx = document.getElementById('strategyActiveChart').getContext('2d');
+                
+                const labels = Array.from({length: 40}, (_, i) => i);
+                let datasets = [];
+                let options = { maintainAspectRatio: false, interaction: { mode: 'index', intersect: false }, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } };
+
+                // Handle data rendering based on strategy type
+                if(strat.id === 'ema' || strat.id === 'macd') {
+                    // Upward Trend Simulation
+                    const price = [50,52,55,54,58,60,65,63,68,70,68,64,61,60,63,68,75,80,85,82,88,95,98,95,92,90,95,100,105,110,108,115,120,118,125,130,128,135,140,145];
+                    const line1 = price.map((p,i) => i<4 ? p : price.slice(i-4,i).reduce((a,b)=>a+b)/4 + 2);
+                    const line2 = price.map((p,i) => i<10 ? p-5 : price.slice(i-10,i).reduce((a,b)=>a+b)/10 - 2);
+                    datasets = [
+                        { label: 'Price', data: price, borderColor: '#CBD5E1', borderWidth: 2, pointRadius: 0, tension: 0.2 },
+                        { label: strat.id==='ema'?'EMA 9':'MACD', data: line1, borderColor: '#4A90E2', borderWidth: 3, pointRadius: 0, tension: 0.4 },
+                        { label: strat.id==='ema'?'EMA 21':'Signal', data: line2, borderColor: '#F5A623', borderWidth: 3, pointRadius: 0, tension: 0.4 }
+                    ];
+                    if(strat.id === 'macd') {
+                        const hist = line1.map((l1, i) => l1 - line2[i]);
+                        options.scales.y1 = { display: false, position: 'right' };
+                        datasets.push({ label: 'Histogram', data: hist, type: 'bar', yAxisID: 'y1', backgroundColor: hist.map(h => h > 0 ? '#A3B18A' : '#E07A5F') });
+                    }
+                } 
+                else if (strat.id === 'smc' || strat.id === 'vol') {
+                    // Structure pull back / Breakout Simulation
+                    const price = [100,90,70,50,45,40,42,38,35,40,45,60,80,95,90,80,70,60,50,45, 42, 55,75,90,110,120,130,125,135,145,140,150,160,155,165,170,165,175,180,185];
+                    datasets = [
+                        { label: 'Price', data: price, borderColor: '#2D3748', borderWidth: 2, pointRadius: 2, pointBackgroundColor: '#2D3748', tension: 0.1 },
+                        { label: 'Zone', data: price.map((p,i) => (i>=5 && i<=22) ? 40 : null), borderColor: strat.id==='smc'?'rgba(163, 177, 138, 0.4)':'rgba(203, 213, 225, 0.6)', borderWidth: 30, pointRadius: 0 }
+                    ];
+                }
+                else if (strat.id === 'rsi' || strat.id === 'funding') {
+                    // Divergence / Contrarian Simulation
+                    const price = [100,95,90,85,95,100,90,80,75,70,85,90,80,70,60,55,70,75,65,55,45,40, 55,60,50,40,35,30, 45,60,75,90,105,100,115,130,125,140,150,145];
+                    const osc =   [50, 45, 40, 35, 55, 60, 45, 35, 30, 25, 50, 55, 45, 35, 30, 28, 48, 52, 42, 35, 25, 20, 45, 50, 40, 35, 30, 32, 55,65,75,80,85,82,88,90,85,92,95,90];
+                    options.scales.y = { display: false };
+                    options.scales.y1 = { display: false, position: 'right', min: 0, max: 100 };
+                    datasets = [
+                        { label: 'Price', data: strat.id==='funding'?price.reverse():price, yAxisID: 'y', borderColor: '#2D3748', borderWidth: 2, pointRadius: 0, tension: 0.3 },
+                        { label: 'Oscillator', data: strat.id==='funding'?osc.reverse():osc, yAxisID: 'y1', borderColor: strat.id==='rsi'?'#9F7AEA':'#E07A5F', borderWidth: 2, borderDash: [5,5], pointRadius: 0, tension: 0.3 }
+                    ];
+                }
+                else if (strat.id === 'bb' || strat.id === 'vwap') {
+                    // Mean Reversion / Bands Simulation
+                    const basis = Array.from({length:40}, () => 100);
+                    const upper = basis.map(b => b + 20);
+                    const lower = basis.map(b => b - 20);
+                    const price = [100,105,115,122, 110,100,90,80,75, 85,95,100,110,118,121,115,100,90,85,78, 85,95,105,110,119,105,95,85,82,88,98,105,115,120,110,100,90,80,78,85];
+                    datasets = [
+                        { label: 'Price', data: price, borderColor: '#2D3748', borderWidth: 2, pointRadius: 3, pointBackgroundColor: '#fff', tension: 0.2 },
+                        { label: 'Upper Band', data: upper, borderColor: strat.id==='bb'?'rgba(224, 122, 95, 0.5)':'rgba(74, 144, 226, 0.5)', borderWidth: 2, borderDash: [5,5], pointRadius: 0 },
+                        { label: 'Lower Band', data: lower, borderColor: strat.id==='bb'?'rgba(163, 177, 138, 0.5)':'rgba(74, 144, 226, 0.5)', borderWidth: 2, borderDash: [5,5], pointRadius: 0 },
+                        { label: 'Basis', data: basis, borderColor: '#CBD5E1', borderWidth: 1, pointRadius: 0 }
+                    ];
+                }
+
+                activeStrategyChart = new Chart(ctx, { type: 'line', data: { labels: labels, datasets: datasets }, options: options });
+            }
+
+            // Init everything
+            initCharts();
+            initStrategyGrid();
+            updateStrategyView(strategies[0]); // Load first strategy
+            chartsInitialized = true;
+        });
+    </script>
+</body>
+</html>
