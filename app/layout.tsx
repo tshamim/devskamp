@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { Outfit, DM_Sans } from 'next/font/google'
 import './globals.css'
+import JsonLd from '@/components/JsonLd'
+import { siteUrl } from '@/lib/content'
 
 const outfit = Outfit({
   subsets: ['latin'],
@@ -17,6 +19,7 @@ const dmSans = DM_Sans({
 })
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: 'Devskamp LLC — Agile Offshore Software Development | Utah & Dhaka',
   description:
     'Devskamp LLC is a USA-based software company with an elite engineering hub in Dhaka, Bangladesh. We deliver custom software, cloud infrastructure (AWS/GCP), AI & ML solutions, IoT systems, cybersecurity, and digital marketing for enterprises and startups worldwide.',
@@ -51,13 +54,13 @@ export const metadata: Metadata = {
     description: 'Enterprise software, cloud, AI, IoT and digital marketing from Utah & Dhaka.',
   },
   robots: { index: true, follow: true },
-  alternates: { canonical: 'https://devskamp.com' },
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className="scroll-smooth">
       <body className={`${outfit.variable} ${dmSans.variable} antialiased`}>
+        <JsonLd data={{ '@context': 'https://schema.org', '@type': 'Organization', '@id': `${siteUrl}/#organization`, name: 'Devskamp LLC', url: siteUrl, logo: `${siteUrl}/devskamp-logo.png`, email: 'hello@devskamp.com', description: 'Software engineering, cloud, AI, and business software solutions from Utah and Dhaka.' }} />
         {children}
         <script
           dangerouslySetInnerHTML={{

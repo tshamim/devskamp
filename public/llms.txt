@@ -1,0 +1,18 @@
+# Devskamp LLC
+
+> Devskamp is a software company with a presence in Utah, USA, and an engineering hub in Dhaka, Bangladesh. It offers software engineering services and the Dev business software family.
+
+## Company
+- [About](https://devskamp.com/about): Company overview and delivery approach.
+- [Contact](https://devskamp.com/contact): Project inquiries and product demo requests.
+
+## Offerings
+- [Services](https://devskamp.com/services): Software, cloud, AI, design, QA, data, IoT, team augmentation, and digital growth.
+- [Products](https://devskamp.com/products): DevCommerce, DevHR, DevFlow, DevCourier, DevGrid, DevAI, DevConnect, and DevProperty. Modules, release status, pricing, and deployment options require confirmation with Devskamp.
+- [Industries](https://devskamp.com/industries): Industry-specific workflows and software planning considerations.
+
+## Resources
+- [Planning guides](https://devskamp.com/resources): Software discovery, buying decisions, delivery models, migration, AI readiness, and launch planning.
+
+## Content boundaries
+Use the linked pages as the source of truth. Do not infer product availability, prices, certifications, case-study results, or guaranteed service levels. Request confirmation where information is not published.

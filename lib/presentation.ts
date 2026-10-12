@@ -1,0 +1,17 @@
+export const presentation: Record<string, { accent: string; soft: string; label: string; heading: string; note: string; stages: string[] }> = {
+  products: { accent: '#5eead4', soft: 'rgba(94,234,212,.10)', label: 'The Dev ecosystem', heading: 'Connected tools. Clearer operations.', note: 'A family of solutions built around the work your team needs to get done.', stages: ['People & commerce', 'Workflows & delivery', 'Devices & intelligence'] },
+  services: { accent: '#a5b4fc', soft: 'rgba(165,180,252,.10)', label: 'From idea to operation', heading: 'One delivery path. The right expertise.', note: 'Bring design, engineering, and operations together around a useful outcome.', stages: ['Discover & design', 'Build & integrate', 'Verify & operate'] },
+  industries: { accent: '#fcd34d', soft: 'rgba(252,211,77,.10)', label: 'Built around your business', heading: 'Different industries. Shared clarity.', note: 'Connect people, systems, and decisions around the realities of your sector.', stages: ['Map the workflow', 'Connect the systems', 'Support the operation'] },
+}
+export const entryLabels: Record<string, { label: string; glyph: string; flow?: string[] }> = {
+  devcommerce: { label: 'Commerce', glyph: 'commerce', flow: ['Catalog & customers', 'Orders & inventory', 'Payment & fulfillment'] },
+  devhr: { label: 'People operations', glyph: 'people', flow: ['Employee records', 'Attendance & requests', 'Approved payroll inputs'] },
+  devflow: { label: 'Business workflows', glyph: 'workflow', flow: ['Submit a request', 'Review & approve', 'Assign & complete'] },
+  devcourier: { label: 'Delivery operations', glyph: 'logistics', flow: ['Book a shipment', 'Dispatch & track', 'Confirm & reconcile'] },
+  devgrid: { label: 'Connected devices', glyph: 'device', flow: ['Connect devices', 'Review telemetry', 'Respond to events'] },
+  devai: { label: 'Applied intelligence', glyph: 'intelligence', flow: ['Approved sources', 'Process & evaluate', 'Human review'] },
+  devconnect: { label: 'Communications', glyph: 'connect', flow: ['Business event', 'Approved message', 'Delivery feedback'] },
+  devproperty: { label: 'Property operations', glyph: 'building', flow: ['Property & unit', 'Tenant request', 'Maintenance action'] },
+  'custom-software-development': { label: 'Product engineering', glyph: 'code' }, 'cloud-devops': { label: 'Infrastructure', glyph: 'cloud' }, 'ai-machine-learning': { label: 'Intelligence', glyph: 'intelligence' }, 'ui-ux-design': { label: 'Experience design', glyph: 'design' }, 'quality-assurance': { label: 'Quality & reliability', glyph: 'shield' }, 'data-engineering': { label: 'Data foundations', glyph: 'data' }, 'iot-embedded-systems': { label: 'Connected hardware', glyph: 'device' }, 'staff-augmentation': { label: 'Engineering capacity', glyph: 'people' }, 'seo-digital-growth': { label: 'Discovery & growth', glyph: 'growth' },
+  'retail-ecommerce': { label: 'Retail & distribution', glyph: 'commerce' }, logistics: { label: 'Movement & fulfillment', glyph: 'logistics' }, healthcare: { label: 'Care & administration', glyph: 'health' }, education: { label: 'Learning & enrollment', glyph: 'education' }, manufacturing: { label: 'Production & assets', glyph: 'device' }, 'real-estate': { label: 'Properties & portfolios', glyph: 'building' }, fintech: { label: 'Finance & integrations', glyph: 'shield' }, 'saas-startups': { label: 'Products & ventures', glyph: 'growth' },
+}

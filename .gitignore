@@ -5,6 +5,7 @@ node_modules
 
 # production build
 .next
+*.tsbuildinfo
 out
 
 # env — NEVER commit these
@@ -33,3 +34,9 @@ Thumbs.db
 
 # vercel
 .vercel
+
+# Internal company documents and local preview artifacts
+internal/
+docs/company-templates/
+docs/devskamp-company-document-toolkit.zip
+docs/screenshots/

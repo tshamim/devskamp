@@ -1,6 +1,11 @@
 import Image from 'next/image'
 import Navbar from '@/components/Navbar'
 import ContactForm from '@/components/ContactForm'
+import HomeExplore from '@/components/HomeExplore'
+import SiteFooter from '@/components/SiteFooter'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = { alternates: { canonical: '/' } }
 
 /* ── DATA ─────────────────────────────────────────────────────────────────── */
 
@@ -503,6 +508,7 @@ export default function Home() {
       </section>
 
       {/* ── SERVICES ────────────────────────────────────────────────────── */}
+      <HomeExplore />
       <section id="services" className="py-24 px-6 md:px-16 bg-navy-900">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
@@ -842,67 +848,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── FOOTER ──────────────────────────────────────────────────────── */}
-      <footer className="border-t border-navy-700/60 pt-16 pb-8 px-6 md:px-16">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 pb-12 border-b border-navy-700/60">
-            {/* Brand */}
-            <div className="col-span-2 md:col-span-1">
-              <Image
-                src="/devskamp-logo.png"
-                alt="Devskamp LLC"
-                width={160}
-                height={40}
-                className="h-9 w-auto brightness-0 invert mb-4"
-              />
-              <p className="text-slate-500 text-sm leading-relaxed max-w-[220px]">
-                Agile offshore software development. Utah, USA &amp; Dhaka, Bangladesh.
-              </p>
-            </div>
-
-            {[
-              {
-                title: 'Services',
-                links: ['Software Development', 'Cloud Services', 'AI & Machine Learning', 'IoT & Embedded', 'Digital Marketing', 'UI/UX & Prototyping', 'Data Engineering', 'Blockchain & Web3', 'Staff Augmentation'],
-              },
-              {
-                title: 'Company',
-                links: ['About Us', 'Why Devskamp', 'Our Process', 'Industries', 'Global Offices', 'Contact Us'],
-              },
-              {
-                title: 'Technologies',
-                links: ['React & Next.js', 'AWS & GCP', 'Python & FastAPI', 'Node.js', 'Machine Learning', 'Kubernetes', 'IoT Hardware'],
-              },
-            ].map((col) => (
-              <div key={col.title}>
-                <p className="font-heading font-bold text-sm text-white mb-4">{col.title}</p>
-                <ul className="space-y-2.5">
-                  {col.links.map((link) => (
-                    <li key={link}>
-                      <a href="#" className="text-slate-500 text-sm hover:text-sky-400 transition-colors">
-                        {link}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8">
-            <p className="text-slate-600 text-sm">
-              &copy; {new Date().getFullYear()} Devskamp LLC. All rights reserved. Utah, USA &amp; Dhaka, Bangladesh.
-            </p>
-            <div className="flex gap-6">
-              {['Privacy Policy', 'Terms of Service', 'Cookie Policy'].map((l) => (
-                <a key={l} href="#" className="text-slate-600 text-sm hover:text-sky-400 transition-colors">
-                  {l}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </>
   )
 }
